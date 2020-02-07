@@ -7,10 +7,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 function custom_contact_section_map() {
     /* PREPARE SETTINGS FOR VC_MAP */
     $settings = array(
-        'name'                    => __( 'Sección de Contacto', 'pahoy' ),
+        'name'                    => __( 'Sección de Contacto', 'shibuya' ),
         'base'                    => 'vc_custom_contact_section',
-        'category'                => __( 'Elementos [PaHoy]', 'pahoy' ),
-        'description'             => __( 'Agrega una Locaciones del Restaurante.', 'pahoy' ),
+        'category'                => __( 'Elementos [shibuya]', 'shibuya' ),
+        'description'             => __( 'Agrega una Locaciones del Restaurante.', 'shibuya' ),
         'show_settings_on_create' => true,
         'weight'                  => -5,
         'params'                  => array(
@@ -18,28 +18,28 @@ function custom_contact_section_map() {
                 'type' => 'attach_image',
                 'class' => '',
                 'admin_label' => false,
-                'heading' => __('Fondo de Sección', 'pahoy'),
+                'heading' => __('Fondo de Sección', 'shibuya'),
                 'param_name' => 'image',
                 'value' => '',
-                'description' => __('Agregar la imagen que describa este bloque', 'pahoy')
+                'description' => __('Agregar la imagen que describa este bloque', 'shibuya')
             ),
             array(
                 'type' => 'textfield',
                 'class' => '',
                 'admin_label' => true,
-                'heading' => __('Título', 'pahoy'),
+                'heading' => __('Título', 'shibuya'),
                 'param_name' => 'content',
                 'value' => '',
-                'description' => __('Agregar el texto del título', 'pahoy')
+                'description' => __('Agregar el texto del título', 'shibuya')
             ),
             array(
                 'type' => 'textfield',
                 'class' => '',
                 'admin_label' => true,
-                'heading' => __('Subtitulo', 'pahoy'),
+                'heading' => __('Subtitulo', 'shibuya'),
                 'param_name' => 'subtitle',
                 'value' => '',
-                'description' => __('Agregar el texto del título', 'pahoy')
+                'description' => __('Agregar el texto del título', 'shibuya')
             ),
         )
     );

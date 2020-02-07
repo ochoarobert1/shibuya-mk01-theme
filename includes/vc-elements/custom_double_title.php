@@ -10,10 +10,10 @@ function custom_double_title_map() {
 
     /* PREPARE SETTINGS FOR VC_MAP */
     $settings = array(
-        'name'                    => __( 'Título Doble', 'pahoy' ),
+        'name'                    => __( 'Título Doble', 'shibuya' ),
         'base'                    => 'vc_custom_double_title',
-        'category'                => __( 'Elementos [PaHoy]', 'pahoy' ),
-        'description'             => __( 'Agrega una barra con las categorias de productos en cuadrados.', 'pahoy' ),
+        'category'                => __( 'Elementos [shibuya]', 'shibuya' ),
+        'description'             => __( 'Agrega una barra con las categorias de productos en cuadrados.', 'shibuya' ),
         'show_settings_on_create' => true,
         'weight'                  => -5,
         'params'                  => array(
@@ -21,26 +21,26 @@ function custom_double_title_map() {
                 'type' => 'textfield',
                 'class' => '',
                 'admin_label' => true,
-                'heading' => __('Título', 'pahoy'),
+                'heading' => __('Título', 'shibuya'),
                 'param_name' => 'content',
                 'value' => '',
-                'description' => __('Agregar el texto del título', 'pahoy')
+                'description' => __('Agregar el texto del título', 'shibuya')
             ),
                array(
                 'type' => 'textfield',
                 'class' => '',
                 'admin_label' => true,
-                'heading' => __('Título', 'pahoy'),
+                'heading' => __('Título', 'shibuya'),
                 'param_name' => 'second',
                 'value' => '',
-                'description' => __('Agregar el texto del título', 'pahoy')
+                'description' => __('Agregar el texto del título', 'shibuya')
             ),
             array(
                 'type' => 'dropdown',
                 'class' => '',
                 'admin_label' => true,
-                'heading' => __('Alineación del Texto', 'pahoy'),
-                'description' => __('Seleccione la alineación del texto.', 'pahoy'),
+                'heading' => __('Alineación del Texto', 'shibuya'),
+                'description' => __('Seleccione la alineación del texto.', 'shibuya'),
                 'param_name' => 'text_alignment',
                 'value' => array( 'centro', 'izquierda', 'derecha' )
             )

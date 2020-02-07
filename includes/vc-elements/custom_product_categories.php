@@ -14,17 +14,17 @@ function custom_product_categories_map() {
 
     /* PREPARE SETTINGS FOR VC_MAP */
     $settings = array(
-        'name'                    => __( 'Categorias de Productos Personalizado', 'pahoy' ),
+        'name'                    => __( 'Categorias de Productos Personalizado', 'shibuya' ),
         'base'                    => 'vc_custom_product_categories',
-        'category'                => __( 'Elementos [PaHoy]', 'pahoy' ),
-        'description'             => __( 'Agrega una barra con las categorias de productos en cuadrados.', 'pahoy' ),
+        'category'                => __( 'Elementos [shibuya]', 'shibuya' ),
+        'description'             => __( 'Agrega una barra con las categorias de productos en cuadrados.', 'shibuya' ),
         'show_settings_on_create' => true,
         'weight'                  => -5,
         'params'                  => array(
             array(
                 'type' => 'checkbox',
-                'heading' => __('Categoría / Categorias', 'pahoy'),
-                'description' => __('Selecciona las categorias que quieres mostrar en este elemento', 'pahoy'),
+                'heading' => __('Categoría / Categorias', 'shibuya'),
+                'description' => __('Selecciona las categorias que quieres mostrar en este elemento', 'shibuya'),
                 'param_name' => 'category_selection',
                 'admin_label' => true,
                 'value' => $categories_array,

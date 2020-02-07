@@ -199,3 +199,36 @@ if ( function_exists('add_image_size') ) {
     add_image_size('shop_catalog', 300, 300, array('center', 'center'));
     add_image_size('single_img', 636, 297, true );
 }
+
+/* --------------------------------------------------------------
+    ADD AJAX PRODUCT QUICKVIEW
+-------------------------------------------------------------- */
+add_action('wp_ajax_nopriv_ajax_product_quickview', 'ajax_product_quickview_handler');
+add_action('wp_ajax_ajax_product_quickview', 'ajax_product_quickview_handler');
+
+function ajax_product_quickview_handler() {
+    $product_id = $_POST['product_id'];
+    $product_post = get_post($product_id);
+    $product = wc_get_product($product_id);
+?>
+<div class="container-fluid">
+    <div class="row">
+        <div class="product-quickview-image col-6">
+            <?php echo get_the_post_thumbnail($product_post, 'full', array('class' => 'img-fluid' )); ?>
+        </div>
+        <div class="product-quickview-content col-6">
+            <h2><?php echo $product_post->post_title; ?></h2>
+            <div class="product-quickview-price">
+                <?php echo $product->get_price_html(); ?>
+            </div>
+            <div class="product-quickview-info">
+                <?php echo apply_filters('the_content', $product_post->post_content); ?>
+            </div>
+            <a href="<?php echo get_permalink($product_post); ?>"><?php _e('Add to Cart', 'shibuya'); ?></a>
+        </div>
+    </div>
+</div>
+
+<?php 
+    wp_die();
+}

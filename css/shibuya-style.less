@@ -47,17 +47,60 @@ a {
     min-height: 85vh;
 }
 
+.lds-ripple {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.lds-ripple div {
+    position: absolute;
+    border: 4px solid #fff;
+    opacity: 1;
+    border-radius: 50%;
+    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+.lds-ripple div:nth-child(2) {
+    animation-delay: -0.5s;
+}
+
+@keyframes lds-ripple {
+    0% {
+        top: 36px;
+        left: 36px;
+        width: 0;
+        height: 0;
+        opacity: 1;
+    }
+
+    100% {
+        top: 0px;
+        left: 0px;
+        width: 72px;
+        height: 72px;
+        opacity: 0;
+    }
+}
+
+
 @media (min-width: 1200px) {
     .container {
         max-width: 1380px;
     }
 }
 
+.modal-loader {
+    text-align: center;
+    padding: 4rem;
+}
+
 /* --------------------------------------------------------------
 1.- HEADER 
 -------------------------------------------------------------- */
 .top-header {
-    background: @darkgray;
+    background: rgba(27, 27, 27, 0.65);
     color: @white;
     padding: 0.2rem 1rem;
     z-index: 10;
@@ -90,6 +133,8 @@ a {
 
     & .logo-container {
         text-align: center;
+        padding: 1rem;
+        padding-bottom: .5rem;
     }
 
     & .navbar-container {
@@ -114,6 +159,10 @@ a {
             right: -45px;
             width: 212px;
             height: 1px;
+        }
+
+        & .navbar {
+            padding-left: 90px;
         }
 
         & .navbar-nav {
@@ -174,6 +223,7 @@ a {
 }
 
 .footer-social {
+    position: relative;
     background: @orange;
     color: @white;
     padding: .5rem;
@@ -185,6 +235,24 @@ a {
 
         &:hover {
             color: @lightorange;
+        }
+    }
+
+    & .go-top {
+        background: @red;
+        border: 4px solid @white;
+        position: absolute;
+        top: -20px;
+        right: 7%;
+        border-radius: 100%;
+        height: 45px;
+        width: 45px;
+        text-align: center;
+
+        & a {
+            padding: 0;
+            padding-top: 0.3rem;
+            display: block;
         }
     }
 }
@@ -217,7 +285,7 @@ a {
 3.- HOME
 -------------------------------------------------------------- */
 .main-slider-container {
-    margin-top: -165px;
+    margin-top: -205px;
 }
 
 
@@ -235,11 +303,11 @@ a {
     &:before {
         content: '';
         position: absolute;
-        top: 142px;
-        left: -38.5%;
+        top: 0px;
+        left: -820px;
         background: rgba(0, 0, 0, 0.65);
-        width: 100%;
-        height: 100%;
+        width: 200%;
+        height: 200%;
         transform: rotate(40deg);
     }
 
@@ -251,7 +319,7 @@ a {
 
         & h2 {
             font-family: @opensans;
-            font-size: 2rem;
+            font-size: 2.4rem;
             font-weight: 900;
             margin: 0;
         }
@@ -259,7 +327,7 @@ a {
         & h3 {
             font-family: @opensans;
             color: @orange;
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             font-weight: 900;
         }
 
@@ -287,8 +355,8 @@ a {
     &:before {
         bottom: unset;
         left: unset;
-        top: -113px;
-        right: -43%;
+        top: -400px;
+        right: -122.5%;
     }
 
     & .custom-boxed-element-wrapper {
@@ -429,7 +497,7 @@ a {
             .transition(all .3s ease-in-out);
 
             &:hover {
-                background: @red;
+                background: #333333;
             }
         }
     }
@@ -459,7 +527,7 @@ a {
 }
 
 .custom-maps-container .vc_column-inner {
-    padding: 0;
+    padding: 0 !important;
 }
 
 .custom-maps-section {
@@ -605,7 +673,7 @@ a {
         .transition(all .3s ease-in-out);
 
         &:hover {
-            background: @black;
+            background: #333333;
         }
     }
 }
@@ -716,5 +784,35 @@ a {
                 z-index: 99;
             }
         }
+    }
+}
+
+.custom-instagram-title h2 {
+    font-family: @montserrat;
+    font-size: 2.7rem;
+    font-weight: 400;
+}
+
+.custom-instagram-title h4 {
+    color: @orange;
+    font-family: @montserrat;
+    font-size: 1.5rem;
+    font-weight: 300;
+}
+
+
+.custom-modal {
+    & .modal-header {
+        border-bottom: 0;
+
+        & .close {
+            color: @white;
+        }
+    }
+
+    & .modal-content {
+        border-radius: 0;
+        background: @black;
+        color: @white;
     }
 }

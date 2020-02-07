@@ -25,7 +25,7 @@ ob_start();
                 <div class="custom-category-counter-elements">
                     <a href="<?php echo get_term_link($category_element); ?>">
                         <i class="fa fa-envelope-o"></i>
-                        <h3><?php printf( esc_html( _n( '%d elemento', '%d elementos', $product_count, 'pahoy' ) ), $product_count );
+                        <h3><?php printf( esc_html( _n( '%d elemento', '%d elementos', $product_count, 'shibuya' ) ), $product_count );
                             ?></h3>
                     </a>
                 </div>
@@ -51,7 +51,7 @@ ob_start();
                     <div class="custom-category-counter-elements">
                         <a href="<?php echo get_term_link($category_element); ?>">
                             <i class="fa fa-envelope-o"></i>
-                            <h3><?php printf( esc_html( _n( '%d elemento', '%d elementos', $product_count, 'pahoy' ) ), $product_count );
+                            <h3><?php printf( esc_html( _n( '%d elemento', '%d elementos', $product_count, 'shibuya' ) ), $product_count );
                                 ?></h3>
                         </a>
                     </div>

@@ -31,16 +31,52 @@ a:hover {
 .page-container {
   min-height: 85vh;
 }
+.lds-ripple {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ripple div {
+  position: absolute;
+  border: 4px solid #fff;
+  opacity: 1;
+  border-radius: 50%;
+  animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.lds-ripple div:nth-child(2) {
+  animation-delay: -0.5s;
+}
+@keyframes lds-ripple {
+  0% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    top: 0px;
+    left: 0px;
+    width: 72px;
+    height: 72px;
+    opacity: 0;
+  }
+}
 @media (min-width: 1200px) {
   .container {
     max-width: 1380px;
   }
 }
+.modal-loader {
+  text-align: center;
+  padding: 4rem;
+}
 /* --------------------------------------------------------------
 1.- HEADER 
 -------------------------------------------------------------- */
 .top-header {
-  background: #1B1B1B;
+  background: rgba(27, 27, 27, 0.65);
   color: #ffffff;
   padding: 0.2rem 1rem;
   z-index: 10;
@@ -67,6 +103,8 @@ a:hover {
 }
 .the-header .logo-container {
   text-align: center;
+  padding: 1rem;
+  padding-bottom: 0.5rem;
 }
 .the-header .navbar-container {
   position: relative;
@@ -89,6 +127,9 @@ a:hover {
   right: -45px;
   width: 212px;
   height: 1px;
+}
+.the-header .navbar-container .navbar {
+  padding-left: 90px;
 }
 .the-header .navbar-container .navbar-nav .nav-item .nav-link {
   font-family: 'Quicksand', sans-serif;
@@ -132,6 +173,7 @@ a:hover {
   text-transform: uppercase;
 }
 .footer-social {
+  position: relative;
   background: #B27A01;
   color: #ffffff;
   padding: 0.5rem;
@@ -143,6 +185,22 @@ a:hover {
 }
 .footer-social a:hover {
   color: #FF9501;
+}
+.footer-social .go-top {
+  background: #FE0000;
+  border: 4px solid #ffffff;
+  position: absolute;
+  top: -20px;
+  right: 7%;
+  border-radius: 100%;
+  height: 45px;
+  width: 45px;
+  text-align: center;
+}
+.footer-social .go-top a {
+  padding: 0;
+  padding-top: 0.3rem;
+  display: block;
 }
 .footer-menu a {
   padding: 0.5rem !important;
@@ -167,7 +225,7 @@ a:hover {
 3.- HOME
 -------------------------------------------------------------- */
 .main-slider-container {
-  margin-top: -165px;
+  margin-top: -205px;
 }
 /* --------------------------------------------------------------
 4.- WPBAKERY
@@ -182,11 +240,11 @@ a:hover {
 .custom-boxed-element:before {
   content: '';
   position: absolute;
-  top: 142px;
-  left: -38.5%;
+  top: 0px;
+  left: -820px;
   background: rgba(0, 0, 0, 0.65);
-  width: 100%;
-  height: 100%;
+  width: 200%;
+  height: 200%;
   transform: rotate(40deg);
 }
 .custom-boxed-element .custom-boxed-element-wrapper {
@@ -197,14 +255,14 @@ a:hover {
 }
 .custom-boxed-element .custom-boxed-element-wrapper h2 {
   font-family: 'Open Sans', sans-serif;
-  font-size: 2rem;
+  font-size: 2.4rem;
   font-weight: 900;
   margin: 0;
 }
 .custom-boxed-element .custom-boxed-element-wrapper h3 {
   font-family: 'Open Sans', sans-serif;
   color: #B27A01;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 900;
 }
 .custom-boxed-element .custom-boxed-element-wrapper h5 {
@@ -226,8 +284,8 @@ a:hover {
 .custom-boxed-element-inverted:before {
   bottom: unset;
   left: unset;
-  top: -113px;
-  right: -43%;
+  top: -400px;
+  right: -122.5%;
 }
 .custom-boxed-element-inverted .custom-boxed-element-wrapper {
   position: absolute;
@@ -350,7 +408,7 @@ a:hover {
   transition: all 0.3s ease-in-out;
 }
 .custom-locations-container .custom-location-buttons .btn-location:hover {
-  background: #FE0000;
+  background: #333333;
 }
 .custom-locations-container .custom-location-additional {
   text-align: center;
@@ -372,7 +430,7 @@ a:hover {
   background: url(../images/dividerblanco.png);
 }
 .custom-maps-container .vc_column-inner {
-  padding: 0;
+  padding: 0 !important;
 }
 .custom-maps-section {
   padding: 0;
@@ -498,7 +556,7 @@ a:hover {
   transition: all 0.3s ease-in-out;
 }
 .contact-form-container .btn-submit:hover {
-  background: #000000;
+  background: #333333;
 }
 /* --------------------------------------------------------------
 5.- WOOCOMMERCE
@@ -607,4 +665,26 @@ a:hover {
 .woocommerce-page ul.products li.product .custom-image-wrapper:hover .custom-image-data-wrapper {
   opacity: 1;
   z-index: 99;
+}
+.custom-instagram-title h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.7rem;
+  font-weight: 400;
+}
+.custom-instagram-title h4 {
+  color: #B27A01;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+.custom-modal .modal-header {
+  border-bottom: 0;
+}
+.custom-modal .modal-header .close {
+  color: #ffffff;
+}
+.custom-modal .modal-content {
+  border-radius: 0;
+  background: #000000;
+  color: #ffffff;
 }

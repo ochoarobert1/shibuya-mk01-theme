@@ -51,12 +51,29 @@
             <a href="<?php echo esc_url($social_options['linkedin']);?>" title="<?php _e('Visita nuestro Perfil en LinkedIn', 'shibuya'); ?>" target="_blank"><i class="fa fa-linkedin"></i></a>
             <?php } ?>
             <?php } ?>
+            <div class="go-top">
+                <a href="#top" title="<?php _e('Go to top', 'shibuya'); ?>"><i class="fa fa-chevron-up"></i></a>
+            </div>
         </div>
         <div class="footer-copy col-12">
             <h5><strong>2020 &copy; <?php _e('all rights reserved for', 'shibuya'); ?></strong> Shibuya Sushi Bar <strong><?php _e('Developed by', 'shibuya'); ?></strong> Cadestudio</h5>
         </div>
     </div>
 </footer>
+<div class="modal custom-modal fade" id="productModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+        </div>
+    </div>
+</div>
 <?php wp_footer() ?>
 </body>
 

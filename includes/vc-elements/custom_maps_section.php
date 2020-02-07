@@ -7,10 +7,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 function custom_maps_section_map() {
     /* PREPARE SETTINGS FOR VC_MAP */
     $settings = array(
-        'name'                    => __( 'Sección de Maps', 'pahoy' ),
+        'name'                    => __( 'Sección de Maps', 'shibuya' ),
         'base'                    => 'vc_custom_maps_section',
-        'category'                => __( 'Elementos [PaHoy]', 'pahoy' ),
-        'description'             => __( 'Agrega una Locaciones del Restaurante.', 'pahoy' ),
+        'category'                => __( 'Elementos [shibuya]', 'shibuya' ),
+        'description'             => __( 'Agrega una Locaciones del Restaurante.', 'shibuya' ),
         'show_settings_on_create' => true,
         'weight'                  => -5,
         'params'                  => array(
@@ -18,10 +18,10 @@ function custom_maps_section_map() {
                 'type' => 'textfield',
                 'class' => '',
                 'admin_label' => true,
-                'heading' => __('Título', 'pahoy'),
+                'heading' => __('Título', 'shibuya'),
                 'param_name' => 'content',
                 'value' => '',
-                'description' => __('Agregar el texto del título', 'pahoy')
+                'description' => __('Agregar el texto del título', 'shibuya')
             ),
         )
     );

@@ -10,10 +10,10 @@ function custom_testimonials_section_map() {
 
     /* PREPARE SETTINGS FOR VC_MAP */
     $settings = array(
-        'name'                    => __( 'Slider de Testimonios', 'pahoy' ),
+        'name'                    => __( 'Slider de Testimonios', 'shibuya' ),
         'base'                    => 'vc_custom_testimonials_section',
-        'category'                => __( 'Elementos [PaHoy]', 'pahoy' ),
-        'description'             => __( 'Agrega una sliders con los Testimonios cargados dentro del sitio.', 'pahoy' ),
+        'category'                => __( 'Elementos [shibuya]', 'shibuya' ),
+        'description'             => __( 'Agrega una sliders con los Testimonios cargados dentro del sitio.', 'shibuya' ),
         'show_settings_on_create' => true,
         'weight'                  => -5,
         'params'                  => array(
@@ -21,10 +21,10 @@ function custom_testimonials_section_map() {
                 'type' => 'textfield',
                 'class' => '',
                 'admin_label' => true,
-                'heading' => __('Cantidad', 'pahoy'),
+                'heading' => __('Cantidad', 'shibuya'),
                 'param_name' => 'quantity',
                 'value' => '',
-                'description' => __('Agregar la cantidad de testimonios', 'pahoy')
+                'description' => __('Agregar la cantidad de testimonios', 'shibuya')
             ),
 
         )

@@ -102,7 +102,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="logo-container col-12">
-                            <a class="navbar-brand" href="<?php echo home_url('/');?>" title="<?php echo get_bloginfo('name'); ?>">
+                            <a href="<?php echo home_url('/');?>" title="<?php echo get_bloginfo('name'); ?>">
                                 <?php ?> <?php $custom_logo_id = get_theme_mod( 'custom_logo' ); ?>
                                 <?php $image = wp_get_attachment_image_src( $custom_logo_id , 'logo' ); ?>
                                 <?php if (!empty($image)) { ?>

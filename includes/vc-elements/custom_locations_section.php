@@ -18,17 +18,17 @@ function custom_locations_section_map() {
 
     /* PREPARE SETTINGS FOR VC_MAP */
     $settings = array(
-        'name'                    => __( 'Locaciones del Restaurante', 'pahoy' ),
+        'name'                    => __( 'Locaciones del Restaurante', 'shibuya' ),
         'base'                    => 'vc_custom_locations_section',
-        'category'                => __( 'Elementos [PaHoy]', 'pahoy' ),
-        'description'             => __( 'Agrega una Locaciones del Restaurante.', 'pahoy' ),
+        'category'                => __( 'Elementos [shibuya]', 'shibuya' ),
+        'description'             => __( 'Agrega una Locaciones del Restaurante.', 'shibuya' ),
         'show_settings_on_create' => true,
         'weight'                  => -5,
         'params'                  => array(
             array(
                 'type' => 'checkbox',
-                'heading' => __('Locaciones', 'pahoy'),
-                'description' => __('Selecciona las categorias que quieres mostrar en este elemento', 'pahoy'),
+                'heading' => __('Locaciones', 'shibuya'),
+                'description' => __('Selecciona las categorias que quieres mostrar en este elemento', 'shibuya'),
                 'param_name' => 'locations_selection',
                 'admin_label' => true,
                 'value' => $locations_array,
@@ -38,8 +38,8 @@ function custom_locations_section_map() {
                 'type' => 'dropdown',
                 'class' => '',
                 'admin_label' => true,
-                'heading' => __('Color de Linea', 'pahoy'),
-                'description' => __('Seleccione el Color de Linea del texto.', 'pahoy'),
+                'heading' => __('Color de Linea', 'shibuya'),
+                'description' => __('Seleccione el Color de Linea del texto.', 'shibuya'),
                 'param_name' => 'color_line',
                 'value' => array( 'orange', 'white' )
             )

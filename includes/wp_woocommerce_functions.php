@@ -108,7 +108,7 @@ function woocommerce_custom_image_wrapper_handler() {
     </div>
     <div class="buttons-container">
         <a href="?add_to_cart=<?php echo get_the_ID(); ?>" class="btn btn-sm btn-product-loop"><i class="fa fa-shopping-cart"></i></a>
-        <a href="<?php echo get_permalink(); ?>" class="btn btn-sm btn-product-loop"><i class="fa fa-search"></i></a>
+        <a data-productid="<?php echo get_the_ID(); ?>" class="btn btn-sm btn-product-loop btn-quickview"><i class="fa fa-search"></i></a>
     </div>
 
 </div>

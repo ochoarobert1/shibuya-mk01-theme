@@ -54,19 +54,19 @@ ob_start();
                     <?php $elements_array = new WP_Query(array('post_type' => 'product', 'posts_per_page' => -1, 'tax_query' => array(array('taxonomy' => $tax_type, 'field' => 'term_id', 'terms' => $term_item->term_id )))); ?>
                     <?php $elements_count = $elements_array->found_posts; ?>
                     <?php wp_reset_query(); ?>
-                    <a href="<?php echo get_term_link($term_item); ?>" class="taxonomy-counter" title="<?php _e('Ver Más', 'pahoy'); ?>">
+                    <a href="<?php echo get_term_link($term_item); ?>" class="taxonomy-counter" title="<?php _e('Ver Más', 'shibuya'); ?>">
                         <?php if ($atts['type_category'] == 'Locaciones') { ?>
-                        <?php printf( esc_html( _n( '%d tour', '%d tours', $elements_count, 'pahoy' ) ), $elements_count );
+                        <?php printf( esc_html( _n( '%d tour', '%d tours', $elements_count, 'shibuya' ) ), $elements_count );
                         ?>
                         <?php } ?>
 
                         <?php if ($atts['type_category'] == 'Categorías de Producto') { ?>
-                        <?php printf( esc_html( _n( '%d product', '%d productos', $elements_count, 'pahoy' ) ), $elements_count );
+                        <?php printf( esc_html( _n( '%d product', '%d productos', $elements_count, 'shibuya' ) ), $elements_count );
                         ?>
                         <?php } ?>
 
                         <?php if ($atts['type_category'] == 'Categorias') { ?>
-                        <?php printf( esc_html( _n( '%d noticia', '%d noticias', $elements_count, 'pahoy' ) ), $elements_count );
+                        <?php printf( esc_html( _n( '%d noticia', '%d noticias', $elements_count, 'shibuya' ) ), $elements_count );
                         ?>
                         <?php } ?>
                     </a>
