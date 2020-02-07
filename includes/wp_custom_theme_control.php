@@ -1,123 +1,179 @@
 <?php
 /* --------------------------------------------------------------
-CUSTOM AREA FOR OPTIONS DATA - shibuya
+CUSTOM AREA FOR OPTIONS DATA - SANTIAGO DUARTE
 -------------------------------------------------------------- */
 
-/* CUSTOM MENU PAGE AND FUNCTIONS IN ADMIN */
-function register_shibuya_settings() {
-    //register our settings
-    register_setting( 'shibuya-settings-group', 'shibuya_dir' );
-    register_setting( 'shibuya-settings-group', 'shibuya_email' );
-    register_setting( 'shibuya-settings-group', 'shibuya_telf' );
-    register_setting( 'shibuya-settings-group', 'shibuya_mob' );
-    register_setting( 'shibuya-settings-group', 'shibuya_fb' );
-    register_setting( 'shibuya-settings-group', 'shibuya_tw' );
-    register_setting( 'shibuya-settings-group', 'shibuya_ig' );
-    register_setting( 'shibuya-settings-group', 'shibuya_yt' );
+add_action( 'customize_register', 'shibuya_customize_register' );
+
+function shibuya_customize_register( $wp_customize ) {
+    /* SOCIAL */
+    $wp_customize->add_section('sy_social_settings', array(
+        'title'    => __('Redes Sociales', 'shibuya'),
+        'description' => __('Agregue aqui las redes sociales de la página, serán usadas globalmente', 'shibuya'),
+        'priority' => 175,
+    ));
+
+    $wp_customize->add_setting('sy_social_settings[facebook]', array(
+        'default'           => '',
+        'sanitize_callback' => 'shibuya_sanitize_url',
+        'capability'        => 'edit_theme_options',
+        'type'           => 'option',
+
+    ));
+
+    $wp_customize->add_control( 'facebook', array(
+        'type' => 'url',
+        'section' => 'sy_social_settings',
+        'settings' => 'sy_social_settings[facebook]',
+        'label' => __( 'Facebook', 'shibuya' ),
+    ) );
+
+    $wp_customize->add_setting('sy_social_settings[twitter]', array(
+        'default'           => '',
+        'sanitize_callback' => 'shibuya_sanitize_url',
+        'capability'        => 'edit_theme_options',
+        'type'           => 'option',
+
+    ));
+
+    $wp_customize->add_control( 'twitter', array(
+        'type' => 'url',
+        'section' => 'sy_social_settings',
+        'settings' => 'sy_social_settings[twitter]',
+        'label' => __( 'Twitter', 'shibuya' ),
+    ) );
+
+    $wp_customize->add_setting('sy_social_settings[instagram]', array(
+        'default'           => '',
+        'sanitize_callback' => 'shibuya_sanitize_url',
+        'capability'        => 'edit_theme_options',
+        'type'           => 'option',
+
+    ));
+
+    $wp_customize->add_control( 'instagram', array(
+        'type' => 'url',
+        'section' => 'sy_social_settings',
+        'settings' => 'sy_social_settings[instagram]',
+        'label' => __( 'Instagram', 'shibuya' ),
+    ) );
+
+    $wp_customize->add_setting('sy_social_settings[linkedin]', array(
+        'default'           => '',
+        'sanitize_callback' => 'shibuya_sanitize_url',
+        'capability'        => 'edit_theme_options',
+        'type'           => 'option',
+
+    ));
+
+    $wp_customize->add_control( 'linkedin', array(
+        'type' => 'url',
+        'section' => 'sy_social_settings',
+        'settings' => 'sy_social_settings[linkedin]',
+        'label' => __( 'LinkedIn', 'shibuya' ),
+    ) );
+
+    $wp_customize->add_setting('sy_social_settings[youtube]', array(
+        'default'           => '',
+        'sanitize_callback' => 'shibuya_sanitize_url',
+        'capability'        => 'edit_theme_options',
+        'type'           => 'option',
+
+    ));
+
+    $wp_customize->add_control( 'youtube', array(
+        'type' => 'url',
+        'section' => 'sy_social_settings',
+        'settings' => 'sy_social_settings[youtube]',
+        'label' => __( 'YouTube', 'shibuya' ),
+    ) );
+
+
+    $wp_customize->add_section('sy_cookie_settings', array(
+        'title'    => __('Cookies', 'shibuya'),
+        'description' => __('Opciones de Cookies', 'shibuya'),
+        'priority' => 176,
+    ));
+
+    $wp_customize->add_setting('sy_cookie_settings[cookie_text]', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+        'capability'        => 'edit_theme_options',
+        'type'           => 'option'
+
+    ));
+
+    $wp_customize->add_control( 'cookie_text', array(
+        'type' => 'textarea',
+        'label'    => __('Cookie consent', 'shibuya'),
+        'description' => __( 'Texto del Cookie consent.' ),
+        'section'  => 'sy_cookie_settings',
+        'settings' => 'sy_cookie_settings[cookie_text]'
+    ));
+
+    $wp_customize->add_setting('sy_cookie_settings[cookie_link]', array(
+        'default'           => '',
+        'sanitize_callback' => 'absint',
+        'capability'        => 'edit_theme_options',
+        'type'           => 'option',
+
+    ));
+
+    $wp_customize->add_control( 'cookie_link', array(
+        'type'     => 'dropdown-pages',
+        'section' => 'sy_cookie_settings',
+        'settings' => 'sy_cookie_settings[cookie_link]',
+        'label' => __( 'Link de Cookies', 'shibuya' ),
+    ) );
+
+    /* YOUTUBE */
+    $wp_customize->add_section('sy_youtube_settings', array(
+        'title'    => __('YouTube', 'shibuya'),
+        'description' => __('Opciones de YouTube', 'shibuya'),
+        'priority' => 176,
+    ));
+
+    $wp_customize->add_setting('sy_youtube_settings[apikey]', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+        'capability'        => 'edit_theme_options',
+        'type'           => 'option'
+
+    ));
+
+    $wp_customize->add_control( 'apikey', array(
+        'type' => 'password',
+        'label'    => __('Cookie consent', 'shibuya'),
+        'description' => __( 'ApiKey para YouTube API V3.' ),
+        'section'  => 'sy_youtube_settings',
+        'settings' => 'sy_youtube_settings[apikey]'
+    ));
+
+    /* FORMULARIO */
+    $wp_customize->add_section('sy_modalform_settings', array(
+        'title'    => __('Formulario Modal', 'shibuya'),
+        'description' => __('Opciones del formulario', 'shibuya'),
+        'priority' => 176,
+    ));
+
+    $wp_customize->add_setting('sy_modalform_settings[thanks_link]', array(
+        'default'           => '',
+        'sanitize_callback' => 'absint',
+        'capability'        => 'edit_theme_options',
+        'type'           => 'option',
+
+    ));
+
+    $wp_customize->add_control( 'thanks_link', array(
+        'type'     => 'dropdown-pages',
+        'section' => 'sy_modalform_settings',
+        'settings' => 'sy_modalform_settings[thanks_link]',
+        'label' => __( 'Link de Agradecimiento', 'shibuya' )
+    ) );
+
+
 }
 
-function my_admin_menu() {
-    add_menu_page( 'Opciones del Sitio', 'Opciones del Sitio', 'manage_options', 'shibuya_custom_options', 'my_custom_menu_page', get_template_directory_uri() . '/images/plugin-icon.png', 120  );
-    /* call register settings function */
-    add_action( 'admin_init', 'register_shibuya_settings' );
+function shibuya_sanitize_url( $url ) {
+    return esc_url_raw( $url );
 }
-
-add_action( 'admin_menu', 'my_admin_menu' );
-
-
-
-/* CUSTOM CSS FOR THIS SECTION */
-function load_custom_wp_admin_style($hook) {
-    if( $hook != 'toplevel_page_shibuya_custom_options' ) {
-        return;
-    }
-    /* ENQUEUE THE CSS */
-    wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i' );
-    wp_enqueue_style( 'custom_wp_admin_css', get_template_directory_uri() . '/css/custom-wordpress-admin-style.css' );
-}
-
-add_action( 'admin_enqueue_scripts', 'load_custom_wp_admin_style' );
-
-/* SEPARATOR FOR STYLING THE CUSTOM PAGE */
-function add_admin_menu_separator( $position ) {
-
-    global $menu;
-
-    $menu[ $position ] = array(
-        0    =>    '',
-        1    =>    'read',
-        2    =>    'separator' . $position,
-        3    =>    '',
-        4    =>    'wp-menu-separator'
-    );
-
-}
-
-function set_admin_menu_separator() {  do_action( 'admin_init', 119 );  }
-
-add_action( 'admin_init', 'add_admin_menu_separator' );
-add_action( 'admin_menu', 'set_admin_menu_separator' );
-
-/* CUSTOM MENU PAGE CONTENT */
-function my_custom_menu_page() { ?>
-
-<div class="shibuya_custom_options-header">
-    <img src="<?php echo esc_url(get_template_directory_uri()); ?>/images/logo.png" alt="<?php echo get_bloginfo('name'); ?>" class="logo-header" />
-    <h1><?php echo get_admin_page_title(); ?></h1>
-    <div class="custom-clearfix"></div>
-</div>
-<div class="shibuya_custom_options-content">
-    <form method="post" action="options.php">
-        <?php settings_fields( 'shibuya-settings-group' ); ?>
-        <?php do_settings_sections( 'shibuya-settings-group' ); ?>
-        <table class="form-table">
-
-            <tr valign="top">
-                <th scope="row"><?php _e('Dirección', 'shibuya'); ?></th>
-                <td><textarea name="shibuya_dir" cols="95" rows="5"><?php echo esc_attr( get_option('shibuya_dir') ); ?></textarea></td>
-            </tr>
-
-            <tr valign="top">
-                <th scope="row"><?php _e('Correo Electrónico', 'shibuya'); ?></th>
-                <td><input type="text" size="90" name="shibuya_email" value="<?php echo esc_attr( get_option('shibuya_email') ); ?>" /></td>
-            </tr>
-
-            <tr valign="top">
-                <th scope="row"><?php _e('Teléfono', 'shibuya'); ?></th>
-                <td><input type="text" size="90" name="shibuya_telf" value="<?php echo esc_attr( get_option('shibuya_telf') ); ?>" /></td>
-            </tr>
-
-            <tr valign="top">
-                <th scope="row"><?php _e('Móvil', 'shibuya'); ?></th>
-                <td><input type="text" size="90" name="shibuya_mob" value="<?php echo esc_attr( get_option('shibuya_mob') ); ?>" /></td>
-            </tr>
-
-            <tr valign="top">
-                <th scope="row" colspan="2"><h3><?php _e('Redes Sociales', 'shibuya'); ?></h3></th>
-            </tr>
-
-            <tr valign="top">
-                <th scope="row"><?php _e('Perfil de Facebook', 'shibuya'); ?></th>
-                <td><input type="text" size="90" name="shibuya_fb" value="<?php echo esc_attr( get_option('shibuya_fb') ); ?>" /></td>
-            </tr>
-
-            <tr valign="top">
-                <th scope="row"><?php _e('Perfil de Twitter', 'shibuya'); ?></th>
-                <td><input type="text" size="90" name="shibuya_tw" value="<?php echo esc_attr( get_option('shibuya_tw') ); ?>" /></td>
-            </tr>
-
-            <tr valign="top">
-                <th scope="row"><?php _e('Perfil de Instagram', 'shibuya'); ?></th>
-                <td><input type="text" size="90" name="shibuya_ig" value="<?php echo esc_attr( get_option('shibuya_ig') ); ?>" /></td>
-            </tr>
-
-            <tr valign="top">
-                <th scope="row"><?php _e('Canal de Youtube', 'shibuya'); ?></th>
-                <td><input type="text" size="90" name="shibuya_yt" value="<?php echo esc_attr( get_option('shibuya_yt') ); ?>" /></td>
-            </tr>
-
-        </table>
-        <?php submit_button(); ?>
-    </form>
-</div>
-<?php }

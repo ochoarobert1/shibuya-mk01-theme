@@ -176,7 +176,14 @@ require_once('includes/wp_custom_post_type.php');
     ADD CUSTOM THEME CONTROLS
 -------------------------------------------------------------- */
 
-//require_once('includes/wp_custom_theme_control.php');
+require_once('includes/wp_custom_theme_control.php');
+
+
+/* --------------------------------------------------------------
+    ADD WPBAKERY OVERRIDES
+-------------------------------------------------------------- */
+
+require_once('includes/wp_wpbakery_overrides.php');
 
 /* --------------------------------------------------------------
     ADD CUSTOM IMAGE SIZE
@@ -187,6 +194,8 @@ if ( function_exists('add_theme_support') ) {
 }
 if ( function_exists('add_image_size') ) {
     add_image_size('avatar', 100, 100, true);
+    add_image_size('logo', 9999, 100, false);
     add_image_size('blog_img', 276, 217, true);
+    add_image_size('shop_catalog', 300, 300, array('center', 'center'));
     add_image_size('single_img', 636, 297, true );
 }

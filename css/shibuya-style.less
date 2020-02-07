@@ -1,3 +1,4 @@
+// compress: false, strictMath: true, javascriptEnabled: true
 /* --------------------------------------------------------------
 /* MAIN LESS MIXINS AND FUNCTIONS - LESSHAT
 -------------------------------------------------------------- */
@@ -8,21 +9,27 @@ Variables
 
 /* Colors */
 @black: #000000;
-@gray3: #333333;
-@gray6: #666666;
-@gray9: #999999;
-@grayc: #cccccc;
-@grayf0: #f0f0f0;
 @white: #ffffff;
-@blue: #2B7BCB;
-@orange: #FFB12A;
+@darkgray: #1B1B1B;
+@orange: #B27A01;
+@lightorange: #FF9501;
+@red: #FE0000;
+@green: #85B200;
+@opensans: 'Open Sans', sans-serif;
+@quicksand: 'Quicksand', sans-serif;
+@montserrat: 'Montserrat', sans-serif;
 
 /* --------------------------------------------------------------
 Body default
 -------------------------------------------------------------- */
-html, body { height: 100%; }
+html,
+body {
+    height: 100%;
+}
 
 body {
+    background: @black;
+    color: @white;
     font-weight: 400;
     font-family: 'Open Sans', sans-serif;
 }
@@ -30,10 +37,684 @@ body {
 a {
     .transition(all .2s ease-in-out);
 
-    &:hover { text-decoration: none; }
+    &:hover {
+        text-decoration: none;
+    }
 }
 
 
 .page-container {
     min-height: 85vh;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1380px;
+    }
+}
+
+/* --------------------------------------------------------------
+1.- HEADER 
+-------------------------------------------------------------- */
+.top-header {
+    background: @darkgray;
+    color: @white;
+    padding: 0.2rem 1rem;
+    z-index: 10;
+
+    & .top-center {
+        text-align: center;
+
+        & a {
+            color: @white;
+            padding: 0 1rem;
+
+            &:hover {
+                color: @orange;
+            }
+        }
+    }
+
+    & .top-right {
+        text-align: right;
+        font-size: .9rem;
+
+        & .fa {
+            margin-right: 10px;
+        }
+    }
+}
+
+.the-header {
+    z-index: 10;
+
+    & .logo-container {
+        text-align: center;
+    }
+
+    & .navbar-container {
+        position: relative;
+        border-bottom: 1px solid rgba(255, 149, 1, 0.56);
+
+        &:before {
+            content: '';
+            background: url(../images/lineaizq.jpg);
+            position: absolute;
+            bottom: -1px;
+            left: -45px;
+            width: 212px;
+            height: 1px;
+        }
+
+        &:after {
+            content: '';
+            background: url(../images/lineader.jpg);
+            position: absolute;
+            bottom: -1px;
+            right: -45px;
+            width: 212px;
+            height: 1px;
+        }
+
+        & .navbar-nav {
+            & .nav-item {
+                & .nav-link {
+                    font-family: @quicksand;
+                    color: @orange;
+                    text-transform: uppercase;
+                    font-weight: 500;
+                    font-size: 1rem;
+                    padding: .3rem 2rem;
+
+                    &:hover {
+                        color: @lightorange;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* --------------------------------------------------------------
+2.- FOOTER 
+-------------------------------------------------------------- */
+.the-footer {
+    background: @darkgray;
+    color: @white;
+    padding: 2rem 1rem;
+
+    & .footer-logo {
+        text-align: center;
+        padding-bottom: 1.5rem;
+
+        & img {
+            display: block;
+            margin: 0 auto;
+        }
+    }
+
+    & .footer-menu {
+        text-align: center;
+
+        & ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            & li {
+                & a {
+                    padding: 1rem;
+                    color: @white;
+                    font-size: .9rem;
+                    text-transform: uppercase;
+                }
+            }
+        }
+    }
+}
+
+.footer-social {
+    background: @orange;
+    color: @white;
+    padding: .5rem;
+    text-align: center;
+
+    & a {
+        padding: 0 1rem;
+        color: @white;
+
+        &:hover {
+            color: @lightorange;
+        }
+    }
+}
+
+.footer-menu a {
+    padding: 0.5rem !important;
+    display: block;
+}
+
+.footer-copy {
+    background: @black;
+    color: @white;
+    text-align: center;
+    padding: 1rem;
+
+
+    & h5 {
+        font-family: @montserrat;
+        font-size: .8rem;
+        font-weight: 300;
+        text-transform: uppercase;
+
+        & strong {
+            font-weight: 400;
+        }
+    }
+}
+
+/* --------------------------------------------------------------
+3.- HOME
+-------------------------------------------------------------- */
+.main-slider-container {
+    margin-top: -165px;
+}
+
+
+/* --------------------------------------------------------------
+4.- WPBAKERY
+-------------------------------------------------------------- */
+.main-boxed-content .vc_column-inner {
+    padding: 0 !important;
+}
+
+.custom-boxed-element {
+    position: relative;
+    overflow: hidden;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 142px;
+        left: -38.5%;
+        background: rgba(0, 0, 0, 0.65);
+        width: 100%;
+        height: 100%;
+        transform: rotate(40deg);
+    }
+
+    & .custom-boxed-element-wrapper {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        padding: 3rem 1rem;
+
+        & h2 {
+            font-family: @opensans;
+            font-size: 2rem;
+            font-weight: 900;
+            margin: 0;
+        }
+
+        & h3 {
+            font-family: @opensans;
+            color: @orange;
+            font-size: 1.6rem;
+            font-weight: 900;
+        }
+
+        & h5 {
+            font-family: @opensans;
+            color: @red;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        & .btn-boxed {
+            font-family: @montserrat;
+            color: @white;
+            padding: 0.1rem .5rem;
+            font-size: 1rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            border-radius: 0;
+            margin-top: 0.5rem;
+        }
+    }
+}
+
+.custom-boxed-element-inverted {
+    &:before {
+        bottom: unset;
+        left: unset;
+        top: -113px;
+        right: -43%;
+    }
+
+    & .custom-boxed-element-wrapper {
+        position: absolute;
+        bottom: unset;
+        left: unset;
+        top: 0;
+        right: 0;
+        padding: 1rem;
+        padding-top: 2rem;
+        text-align: right;
+    }
+}
+
+
+.custom-double-title-section {
+    padding: 2rem 1rem;
+    text-align: center;
+
+    & h2 {
+        font-family: @quicksand;
+        font-size: 2.1rem;
+        font-weight: 500;
+    }
+
+    & h4 {
+        font-family: @quicksand;
+        font-size: 1.2rem;
+        font-weight: 300;
+    }
+}
+
+.izquierda {
+    text-align: left;
+}
+
+.derecha {
+    text-align: right;
+}
+
+.custom-title-section {
+    font-family: @quicksand;
+    text-align: center;
+    padding: 0;
+    margin: 0.3rem 0;
+    margin-bottom: 1rem;
+
+    & h2 {
+        font-family: @quicksand;
+        color: @orange;
+        position: relative;
+        font-size: 2.1rem;
+        letter-spacing: 1px;
+
+        &:before {
+            content: '';
+            background: url(../images/dividerdorado.png);
+            background-size: cover !important;
+            width: 100%;
+            height: 8px;
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+        }
+    }
+}
+
+.custom-locations-container {
+    padding: 0;
+
+    & .custom-location-logo {
+        & img {
+            max-width: 180px;
+            margin: 0 auto;
+            display: block;
+        }
+    }
+
+    & .custom-location-title {
+        margin-top: .5rem;
+
+        & h2 {
+            font-family: @montserrat;
+            font-size: 1.9rem;
+            font-weight: 400;
+            text-transform: uppercase;
+        }
+    }
+
+    & .custom-location-address {
+        font-family: @montserrat;
+        font-size: 1rem;
+        letter-spacing: -1px;
+        text-align: center;
+        margin-bottom: 1rem;
+
+        & .fa {
+            font-size: 2rem;
+            display: block;
+            text-align: center;
+            margin: 0.5rem auto;
+        }
+    }
+
+    & .custom-location-open-hours {
+        font-family: @montserrat;
+        text-align: center;
+        font-size: 1rem;
+        font-weight: 300;
+        line-height: 0.5rem;
+
+        & h4 {
+            font-family: @opensans;
+            margin: .5rem 0;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+        }
+    }
+
+    & .custom-location-buttons {
+        text-align: center;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+
+        & .btn-location {
+            font-family: @montserrat;
+            border: 2px solid @white;
+            color: @white;
+            font-size: 1.1rem;
+            max-width: 170px;
+            width: 170px;
+            margin: 0.5rem 0;
+            font-weight: 900;
+            text-transform: uppercase;
+            border-radius: 0;
+            .transition(all .3s ease-in-out);
+
+            &:hover {
+                background: @red;
+            }
+        }
+    }
+
+    & .custom-location-additional {
+        text-align: center;
+
+        & h4 {
+            font-family: @quicksand;
+            color: @orange;
+            font-size: 0.8rem;
+            font-weight: 400;
+            margin: 0;
+        }
+
+        & h5 {
+            font-family: @montserrat;
+            margin: 0;
+            font-size: 0.8rem;
+            color: @orange;
+        }
+    }
+}
+
+.white-line .custom-title-section h2:before {
+    background: url(../images/dividerblanco.png);
+}
+
+.custom-maps-container .vc_column-inner {
+    padding: 0;
+}
+
+.custom-maps-section {
+    padding: 0;
+
+    .custom-map-item {
+        & .embed-responsive {
+            height: 100%;
+        }
+    }
+
+    .custom-map-info {
+        padding: 1rem;
+        background: rgb(248, 230, 127);
+        background: -moz-linear-gradient(180deg, rgba(248, 230, 127, 1) 0%, rgba(180, 123, 0, 1) 100%);
+        background: -webkit-linear-gradient(180deg, rgba(248, 230, 127, 1) 0%, rgba(180, 123, 0, 1) 100%);
+        background: linear-gradient(180deg, rgba(248, 230, 127, 1) 0%, rgba(180, 123, 0, 1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f8e67f", endColorstr="#b47b00", GradientType=1);
+
+        & .custom-map-info-title {
+            text-align: center;
+            font-size: 1.4rem;
+            font-family: @opensans;
+            font-weight: 400;
+        }
+
+        & img {
+            margin: 0 auto;
+            display: block;
+        }
+
+        & .custom-map-info-item {
+            position: relative;
+            padding: 2rem 1rem;
+
+            &:nth-child(1) {
+                padding-right: 0;
+
+                &:after {
+                    content: '';
+                    position: absolute;
+                    right: -120px;
+                    top: 120px;
+                    height: 5px;
+                    width: 230px;
+                    background: url(../images/dividerblanco.png);
+                    background-size: cover !important;
+                    transform: rotate(90deg);
+                }
+            }
+
+            &:nth-child(2) {
+                padding-right: 0;
+            }
+
+            & h3 {
+                font-family: @opensans;
+                font-size: 1.75rem;
+                padding-left: 1.5rem;
+                padding-bottom: 0.5rem;
+                text-transform: uppercase;
+                font-weight: 600;
+            }
+
+            & .custom-map-info-item-meta {
+                font-family: @quicksand;
+                font-size: 0.9rem;
+                padding-bottom: 1.1rem;
+
+                & .fa {
+                    font-size: 1.2rem;
+                    width: 22px;
+                }
+            }
+        }
+    }
+}
+
+.custom-contact-section {
+    background-size: cover !important;
+    background-position: center center !important;
+    padding: 5rem 1rem;
+    margin-bottom: 2rem;
+
+    & .custom-contact-form-content {
+        color: @white;
+        background: rgba(0, 0, 0, 0.65);
+        text-align: center;
+        padding: 3rem 5rem;
+
+        & h2 {
+            font-family: @opensans;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        & h4 {
+            font-family: @quicksand;
+            color: @orange;
+            position: relative;
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 4rem;
+
+            &:after {
+                content: '';
+                background: url(../images/dividerblanco.png);
+                background-size: 100%;
+                position: absolute;
+                height: 13px;
+                width: 350px;
+                bottom: -23px;
+                left: 25.5%;
+            }
+        }
+    }
+}
+
+.contact-form-container {
+    & .custom-form-control {
+        font-family: @quicksand;
+        font-weight: 500;
+        border: 0;
+        margin-bottom: 1rem;
+        border-radius: 0;
+        font-size: 1.1rem;
+    }
+
+    & .contact-form-submit {
+        text-align: right;
+    }
+
+    & .btn-submit {
+        font-family: @montserrat;
+        background: @red;
+        border: 3px solid @white;
+        border-radius: 0;
+        font-size: 1.3rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        .transition(all .3s ease-in-out);
+
+        &:hover {
+            background: @black;
+        }
+    }
+}
+
+
+
+/* --------------------------------------------------------------
+5.- WOOCOMMERCE
+-------------------------------------------------------------- */
+
+.woocommerce ul.products li.product,
+.woocommerce-page ul.products li.product {
+    position: relative;
+
+    & .woocommerce-loop-product__title {
+        text-transform: uppercase;
+        font-family: @montserrat;
+        font-weight: 900;
+        font-size: 1.1rem;
+        padding-bottom: 0;
+    }
+
+    & .price {
+        font-family: @montserrat;
+        color: @lightorange  !important;
+        display: block;
+        margin-bottom: 0;
+        padding-top: 20px;
+        font-size: 1rem;
+        align-self: flex-end;
+        font-weight: 700;
+    }
+
+    & a {
+        color: @white;
+
+        & img {
+            margin-bottom: 0;
+        }
+    }
+
+    & .content-product-title-container {
+        padding: 0;
+        .display(flex);
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    & .custom-product-loop-category {
+        margin-top: -5px;
+        display: block;
+        font-size: 1rem;
+        color: @lightorange  !important;
+    }
+
+    & .custom-image-wrapper {
+        position: relative;
+
+        & .custom-image-data-wrapper {
+            opacity: 0;
+            z-index: -2;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-flow: column;
+            background: rgba(0, 0, 0, 0.70);
+            .transition(all .3s ease-in-out);
+
+            & h2 {
+                font-size: 2rem;
+                font-weight: 300;
+                text-transform: uppercase;
+                margin-bottom: 0;
+            }
+
+            & .price {
+                font-family: @quicksand;
+                font-weight: 600;
+                font-size: 1.5rem;
+            }
+
+            & .buttons-container {
+                & .btn-product-loop {
+                    background: @red;
+                    color: @white;
+                    border-radius: 100%;
+                    height: 40px;
+                    width: 40px;
+                    margin: 0.5rem;
+                    padding: 0.5rem 0;
+                    text-align: center;
+
+                    &:last-child {
+                        background: @green;
+                    }
+                }
+            }
+        }
+
+        &:hover {
+            & .custom-image-data-wrapper {
+                opacity: 1;
+                z-index: 99;
+            }
+        }
+    }
 }

@@ -65,7 +65,7 @@ function shibuya_load_css() {
         }
 
         /*- GOOGLE FONTS -*/
-        wp_register_style('google-fonts', 'https://fonts.googleapis.com/css?family=Open+Sans', false, $version_remove, 'all');
+        wp_register_style('google-fonts', 'https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800,900|Open+Sans:300,400,600,700,800|Quicksand:300,400,500,600,700&display=swap', false, $version_remove, 'all');
         wp_enqueue_style('google-fonts');
 
         /*- MAIN STYLE -*/
