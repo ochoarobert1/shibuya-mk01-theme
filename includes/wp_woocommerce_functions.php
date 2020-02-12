@@ -107,9 +107,10 @@ function woocommerce_custom_image_wrapper_handler() {
         <?php do_action( 'woocommerce_after_shop_loop_item_title' ); ?>
     </div>
     <div class="buttons-container">
-        <a href="?add_to_cart=<?php echo get_the_ID(); ?>" class="btn btn-sm btn-product-loop"><i class="fa fa-shopping-cart"></i></a>
+        <a id="custom_ajax_add_to_cart" data-id="<?php echo get_the_ID(); ?>" data-sku="<?php echo get_post_meta(get_the_ID(), '_sku', true); ?>" class="btn btn-sm btn-product-loop"><i class="fa fa-shopping-cart"></i></a>
         <a data-productid="<?php echo get_the_ID(); ?>" class="btn btn-sm btn-product-loop btn-quickview"><i class="fa fa-search"></i></a>
     </div>
+    <div class="response-ajax-container response-ajax-container-<?php echo get_the_ID(); ?>"></div>
 
 </div>
 <?php 
@@ -119,3 +120,68 @@ function woocommerce_custom_image_wrapper_handler() {
     return $content;
 }
 /* WOOCOMMERCE - CUSTOM CONTENT PRODUCT - SHOP - END */
+
+/* WOOCOMMERCE - CUSTOM ADD TO CART AJAX HANDLER - START */
+
+add_action('wp_ajax_woocommerce_ajax_add_to_cart', 'woocommerce_ajax_add_to_cart');
+add_action('wp_ajax_nopriv_woocommerce_ajax_add_to_cart', 'woocommerce_ajax_add_to_cart');
+
+function woocommerce_ajax_add_to_cart() {
+
+    $product_id = apply_filters('woocommerce_add_to_cart_product_id', absint($_POST['product_id']));
+    $quantity = empty($_POST['quantity']) ? 1 : wc_stock_amount($_POST['quantity']);
+    $variation_id = absint($_POST['variation_id']);
+    $passed_validation = apply_filters('woocommerce_add_to_cart_validation', true, $product_id, $quantity);
+    $product_status = get_post_status($product_id);
+
+    if ($passed_validation && WC()->cart->add_to_cart($product_id, $quantity, $variation_id) && 'publish' === $product_status) {
+
+        do_action('woocommerce_ajax_added_to_cart', $product_id);
+
+        if ('yes' === get_option('woocommerce_cart_redirect_after_add')) {
+            wc_add_to_cart_message(array($product_id => $quantity), true);
+        }
+
+        WC_AJAX :: get_refreshed_fragments();
+    } else {
+
+        $data = array(
+            'error' => true,
+            'product_url' => apply_filters('woocommerce_cart_redirect_after_error', get_permalink($product_id), $product_id));
+
+        echo wp_send_json($data);
+    }
+
+    wp_die();
+}
+
+/* WOOCOMMERCE - CUSTOM ADD TO CART AJAX HANDLER - END */
+
+/* WOOCOMMERCE - ARCHIVE PRODUCT - START */
+
+remove_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20);
+
+/* WOOCOMMERCE - ARCHIVE PRODUCT - END */
+
+
+/* WOOCOMMERCE - SINGLE PRODUCT - START */
+
+remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40);
+add_action('woocommerce_single_product_summary', 'custom_woocommerce_single_categories', 1);
+
+function custom_woocommerce_single_categories() {
+    $terms = get_the_terms(get_the_ID(), 'product_cat');
+    if ( $terms && ! is_wp_error( $terms ) ) : 
+?>
+<div class="custom-single-category-container">
+    <?php foreach ( $terms as $term ) { ?>
+    <a href="<?php echo get_term_link($term); ?>"><?php echo $term->name; ?></a>
+    <?php } ?>
+</div>
+<?php endif; 
+
+}
+
+
+
+/* WOOCOMMERCE - SINGLE PRODUCT - END */

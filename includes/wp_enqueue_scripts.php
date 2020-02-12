@@ -134,7 +134,8 @@ function shibuya_load_js() {
 
         /* LOCALIZE MAIN SHORTCODE SCRIPT */
         wp_localize_script( 'main-functions', 'admin_url', array(
-            'ajax_url' => admin_url('admin-ajax.php')
+            'ajax_custom_url' => admin_url('admin-ajax.php'),
+            'cart_custom_url' => esc_url(get_permalink( wc_get_page_id( 'cart' )))
         ));
 
         if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {

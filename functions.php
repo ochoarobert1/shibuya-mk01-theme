@@ -127,15 +127,15 @@ function shibuya_widgets_init() {
         'after_title'   => '</h2>',
     ) );
 
-    //    register_sidebar( array(
-    //        'name' => __( 'Shop Sidebar', 'shibuya' ),
-    //        'id' => 'shop_sidebar',
-    //        'description' => __( 'Estos widgets seran vistos en Tienda y Categorias de Producto', 'shibuya' ),
-    //        'before_widget' => '<li id='%1$s' class='widget %2$s'>',
-    //        'after_widget'  => '</li>',
-    //        'before_title'  => '<h2 class='widgettitle'>',
-    //        'after_title'   => '</h2>',
-    //    ) );
+    register_sidebar( array(
+        'name' => __( 'Shop Sidebar', 'shibuya' ),
+        'id' => 'shop_sidebar',
+        'description' => __( 'Estos widgets seran vistos en Tienda y Categorias de Producto', 'shibuya' ),
+        'before_widget' => '<li id="%1$s" class="widget %2$s">',
+        'after_widget' => '</li>',
+        'before_title' => '<h2 class="widgettitle">',
+        'after_title' => '</h2>',
+    ) );
 }
 
 /* --------------------------------------------------------------
@@ -222,9 +222,9 @@ function ajax_product_quickview_handler() {
                 <?php echo $product->get_price_html(); ?>
             </div>
             <div class="product-quickview-info">
-                <?php echo apply_filters('the_content', $product_post->post_content); ?>
+                <?php echo apply_filters('the_content', $product->description); ?>
             </div>
-            <a href="<?php echo get_permalink($product_post); ?>"><?php _e('Add to Cart', 'shibuya'); ?></a>
+            <a href="<?php echo get_permalink($product_post); ?>" class="btn btn-sm btn-modal"><?php _e('Add to Cart', 'shibuya'); ?></a>
         </div>
     </div>
 </div>
