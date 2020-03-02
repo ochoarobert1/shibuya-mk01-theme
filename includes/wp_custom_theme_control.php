@@ -6,6 +6,38 @@ CUSTOM AREA FOR OPTIONS DATA - SANTIAGO DUARTE
 add_action( 'customize_register', 'shibuya_customize_register' );
 
 function shibuya_customize_register( $wp_customize ) {
+    $wp_customize->add_section('sy_google_section', array(
+        'title'    => __('Google Settings', 'shibuya'),
+        'description' => '',
+        'priority' => 120,
+    ));
+
+    $wp_customize->add_setting('sy_google_settings[google_api]', array(
+        'default'        => ' ',
+        'sanitize_callback' => 'sanitize_text_field',
+        'capability'     => 'edit_theme_options',
+        'type'           => 'option'
+    ));
+
+    $wp_customize->add_setting('sy_google_settings[google_secret]', array(
+        'default'        => ' ',
+        'sanitize_callback' => 'sanitize_text_field',
+        'capability'     => 'edit_theme_options',
+        'type'           => 'option'
+    ));
+
+    $wp_customize->add_control('sy_google_api', array(
+        'label'      => __('API Key', 'shibuya'),
+        'section'    => 'sy_google_section',
+        'settings'   => 'sy_google_settings[google_api]',
+    ));
+
+    $wp_customize->add_control('sy_google_secret', array(
+        'label'      => __('API Secret', 'shibuya'),
+        'section'    => 'sy_google_section',
+        'settings'   => 'sy_google_settings[google_secret]',
+    ));
+
     /* SOCIAL */
     $wp_customize->add_section('sy_social_settings', array(
         'title'    => __('Redes Sociales', 'shibuya'),
@@ -86,6 +118,21 @@ function shibuya_customize_register( $wp_customize ) {
         'section' => 'sy_social_settings',
         'settings' => 'sy_social_settings[youtube]',
         'label' => __( 'YouTube', 'shibuya' ),
+    ) );
+
+    $wp_customize->add_setting('sy_social_settings[yelp]', array(
+        'default'           => '',
+        'sanitize_callback' => 'shibuya_sanitize_url',
+        'capability'        => 'edit_theme_options',
+        'type'           => 'option',
+
+    ));
+
+    $wp_customize->add_control( 'yelp', array(
+        'type' => 'url',
+        'section' => 'sy_social_settings',
+        'settings' => 'sy_social_settings[yelp]',
+        'label' => __( 'Yelp', 'shibuya' ),
     ) );
 
 

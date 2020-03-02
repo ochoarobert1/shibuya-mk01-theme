@@ -29,12 +29,12 @@ function shibuya_load_js() {
             //wp_enqueue_script('lettering');
 
             /*- SMOOTH SCROLL -*/
-            //wp_register_script('smooth-scroll', get_template_directory_uri() . '/js/smooth-scroll.min.js', array('jquery'), '16.0.3', true);
-            //wp_enqueue_script('smooth-scroll');
+            wp_register_script('smooth-scroll', get_template_directory_uri() . '/js/smooth-scroll.min.js', array('jquery'), '16.0.3', true);
+            wp_enqueue_script('smooth-scroll');
 
             /*- SMOOTH SCROLL | POLYFILLS -*/
-            //wp_register_script('smooth-scroll-polyfills', get_template_directory_uri() . '/js/smooth-scroll.polyfills.min.js', array('jquery', 'smooth-scroll'), '16.0.3', true);
-            //wp_enqueue_script('smooth-scroll-polyfills');
+            wp_register_script('smooth-scroll-polyfills', get_template_directory_uri() . '/js/smooth-scroll.polyfills.min.js', array('jquery', 'smooth-scroll'), '16.0.3', true);
+            wp_enqueue_script('smooth-scroll-polyfills');
 
             /*- IMAGESLOADED ON LOCAL  -*/
             //wp_register_script('imagesloaded', get_template_directory_uri() . '/js/imagesloaded.pkgd.js', array('jquery'), '4.1.4', true);
@@ -91,12 +91,12 @@ function shibuya_load_js() {
             //wp_enqueue_script('lettering');
 
             /*- SMOOTH SCROLL -*/
-            //wp_register_script('smooth-scroll', 'https://cdnjs.cloudflare.com/ajax/libs/smooth-scroll/16.0.3/smooth-scroll.min.js', array('jquery'), '16.0.3', true);
-            //wp_enqueue_script('smooth-scroll');
+            wp_register_script('smooth-scroll', 'https://cdnjs.cloudflare.com/ajax/libs/smooth-scroll/16.0.3/smooth-scroll.min.js', array('jquery'), '16.0.3', true);
+            wp_enqueue_script('smooth-scroll');
 
             /*- SMOOTH SCROLL | POLYFILLS -*/
-            //wp_register_script('smooth-scroll-polyfills', 'https://cdnjs.cloudflare.com/ajax/libs/smooth-scroll/16.0.3/smooth-scroll.polyfills.min.js', array('jquery', 'smooth-scroll'), '16.0.3', true);
-            //wp_enqueue_script('smooth-scroll-polyfills');
+            wp_register_script('smooth-scroll-polyfills', 'https://cdnjs.cloudflare.com/ajax/libs/smooth-scroll/16.0.3/smooth-scroll.polyfills.min.js', array('jquery', 'smooth-scroll'), '16.0.3', true);
+            wp_enqueue_script('smooth-scroll-polyfills');
 
             /*- IMAGESLOADED -*/
             //wp_register_script('imagesloaded', 'https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js', array('jquery'), '4.1.4', true);
@@ -128,14 +128,30 @@ function shibuya_load_js() {
 
         }
 
+        $google_settings = get_option('sy_google_settings');
+
+        /*- RECAPTCHA -*/
+        wp_register_script('recaptcha-js', 'https://www.google.com/recaptcha/api.js?render=' . $google_settings['google_api'], array('jquery'), '3.0.0', true);
+        wp_enqueue_script('recaptcha-js');
+
         /*- MAIN FUNCTIONS -*/
-        wp_register_script('main-functions', get_template_directory_uri() . '/js/functions.js', array('jquery'), $version_remove, true);
+        wp_register_script('main-functions', get_template_directory_uri() . '/js/functions.js', array('jquery', 'recaptcha-js'), $version_remove, true);
         wp_enqueue_script('main-functions');
 
         /* LOCALIZE MAIN SHORTCODE SCRIPT */
         wp_localize_script( 'main-functions', 'admin_url', array(
             'ajax_custom_url' => admin_url('admin-ajax.php'),
-            'cart_custom_url' => esc_url(get_permalink( wc_get_page_id( 'cart' )))
+            'google_site_key' => $google_settings['google_api'],
+            'cart_custom_url' => esc_url(get_permalink( wc_get_page_id( 'cart' ))),
+            'error_name' => __('Error: Name must not be empty', 'shibuya'),
+            'invalid_name' => __('Error: Name must be valid', 'shibuya'),
+            'error_email' => __('Error: Email must not be empty', 'shibuya'),
+            'invalid_email' => __('Error: Email has an invalid format', 'shibuya'),
+            'error_subject' => __('Error: Subject must not be empty', 'shibuya'),
+            'invalid_subject' => __('Error: Subject must be valid', 'shibuya'),
+            'error_message' => __('Error: Message must not be empty', 'shibuya'),
+            'success_form' => __('Thanks for your message, we will confirm your schedule shortly.', 'shibuya'),
+            'error_form' => __('Error: Try again later.', 'shibuya')
         ));
 
         if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {

@@ -28,29 +28,40 @@ get_header( 'shop' );
  */
 do_action( 'woocommerce_before_main_content' );
 
+$shop_id = get_option( 'woocommerce_shop_page_id' ); 
+
+if (is_tax('product_cat')) {
+    $image_id = get_term_meta(get_queried_object_id(), 'thumbnail_id', true);
+} else {
+    $image_id = get_post_meta($shop_id, 'sby_page_banner_id', true);
+}
+
+$bg_hero = wp_get_attachment_image_src($image_id, 'full', false);
+
 ?>
-<div class="container">
-    <div class="row">
-        <div class="main-woocommerce-custom-container col-12">
+<div class="main-woocommerce-title-container col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="background: url(<?php echo $bg_hero[0]; ?>);">
+    <header class="woocommerce-products-header">
+        <?php if ( apply_filters( 'woocommerce_show_page_title', true ) ) : ?>
+        <h1 class="woocommerce-products-header__title page-title"><?php woocommerce_page_title(); ?></h1>
+        <?php endif; ?>
 
-
-            <header class="woocommerce-products-header">
-                <?php if ( apply_filters( 'woocommerce_show_page_title', true ) ) : ?>
-                <h1 class="woocommerce-products-header__title page-title"><?php woocommerce_page_title(); ?></h1>
-                <?php endif; ?>
-
-                <?php
-                /**
+        <?php
+        /**
 	 * Hook: woocommerce_archive_description.
 	 *
 	 * @hooked woocommerce_taxonomy_archive_description - 10
 	 * @hooked woocommerce_product_archive_description - 10
 	 */
-                do_action( 'woocommerce_archive_description' );
-                ?>
-            </header>
+        do_action( 'woocommerce_archive_description' );
+        ?>
+    </header>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="main-woocommerce-custom-container col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+
             <div class="row">
-                <div class="col-3">
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
                     <?php 
                     /**
  * Hook: woocommerce_sidebar.
@@ -60,7 +71,7 @@ do_action( 'woocommerce_before_main_content' );
                     do_action( 'woocommerce_sidebar' );
                     ?>
                 </div>
-                <div class="col-9">
+                <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12">
 
                     <?php
                     if ( woocommerce_product_loop() ) {

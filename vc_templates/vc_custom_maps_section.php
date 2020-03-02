@@ -11,9 +11,9 @@ ob_start();
 
 <div class="custom-maps-section col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
     <div class="row no-gutters">
-        <?php $args = array('post_type' => 'locations', 'posts_per_page' => -1, 'order' => 'ASC', 'orderby' => 'date'); ?>
+        <?php $args = array('post_type' => 'locations', 'posts_per_page' => -1, 'order' => 'DESC', 'orderby' => 'date'); ?>
         <?php $array_locations = new WP_Query($args); ?>
-        <div class="custom-map-item col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+        <div class="custom-map-item col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 d-xl-block d-lg-block d-md-none d-sm-none d-none">
             <?php $i = 1; ?>
             <?php if ($array_locations->have_posts()) : ?>
             <?php while ($array_locations->have_posts()) : $array_locations->the_post(); ?>
@@ -24,7 +24,6 @@ ob_start();
             <?php } ?>
             <?php $i++; endwhile; ?>
             <?php endif; ?>
-
         </div>
         <div class="custom-map-info col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
             <div class="custom-map-info-title">
@@ -34,7 +33,7 @@ ob_start();
             <div class="row">
                 <?php if ($array_locations->have_posts()) : ?>
                 <?php while ($array_locations->have_posts()) : $array_locations->the_post(); ?>
-                <div class="custom-map-info-item col-6">
+                <div class="custom-map-info-item col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                     <h3><?php the_title(); ?></h3>
                     <div class="custom-map-info-item-meta">
                         <i class="fa fa-map-marker"></i> <strong><span><?php echo get_post_meta(get_the_ID(), 'sby_address', true); ?></span></strong>
@@ -50,7 +49,7 @@ ob_start();
                 <?php endif; ?>
             </div>
         </div>
-        <div class="custom-map-item col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+        <div class="custom-map-item col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 d-xl-block d-lg-block d-md-none d-sm-none d-none">
             <?php $i = 1; ?>
             <?php if ($array_locations->have_posts()) : ?>
             <?php while ($array_locations->have_posts()) : $array_locations->the_post(); ?>
@@ -64,7 +63,16 @@ ob_start();
             <?php endif; ?>
             <?php wp_reset_query(); ?>
         </div>
-
+        <?php $i = 1; ?>
+        <?php if ($array_locations->have_posts()) : ?>
+        <?php while ($array_locations->have_posts()) : $array_locations->the_post(); ?>
+        <div class="custom-map-item col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12 d-xl-none d-lg-none d-md-block d-sm-block d-none">
+            <div class="embed-responsive embed-responsive-1by1">
+                <?php echo get_post_meta(get_the_ID(), 'sby_maps_embed', true); ?>
+            </div>
+        </div>
+        <?php $i++; endwhile; ?>
+        <?php endif; ?>
     </div>
 
 </div>

@@ -16,7 +16,7 @@ ob_start();
     <div class="row no-gutters">
         <div class="custom-contact-content col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="row justify-content-center">
-                <div class="custom-contact-form-content col-xl-8 col-lg-8 col-md-10 col-sm-12 col-12">
+                <div class="custom-contact-form-content col-xl-8 col-lg-8 col-md-11 col-sm-12 col-12">
                     <h2><?php echo $content; ?></h2>
                     <h4><?php echo $atts['subtitle']; ?></h4>
                     <?php get_template_part('templates/contact-form'); ?>

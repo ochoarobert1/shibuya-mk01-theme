@@ -64,6 +64,29 @@ add_action( 'cmb2_admin_init', 'shibuya_register_custom_metabox' );
 function shibuya_register_custom_metabox() {
     $prefix = 'sby_';
 
+    $cmb_page_metabox = new_cmb2_box( array(
+        'id'            => $prefix . 'page_metabox',
+        'title'         => esc_html__( 'Page - Extra Info', 'shibuya' ),
+        'object_types'  => array( 'page' ), // Post type
+        // 'show_on_cb' => 'yourprefix_show_if_front_page', // function should return a bool value
+        // 'context'    => 'normal',
+        // 'priority'   => 'high',
+        // 'show_names' => true, // Show field names on the left
+        // 'cmb_styles' => false, // false to disable the CMB stylesheet
+        // 'closed'     => true, // true to keep the metabox closed by default
+        // 'classes'    => 'extra-class', // Extra cmb2-wrap classes
+        // 'classes_cb' => 'yourprefix_add_some_classes', // Add classes through a callback.
+    ) );
+
+    $cmb_page_metabox->add_field( array(
+        'id'   => $prefix . 'page_banner',
+        'name' => __( 'Banner Image', 'shibuya' ),
+        'desc' => __( 'Descriptive image for this page', 'shibuya' ),
+        'type' => 'file',
+        'preview_size' => array( 200, 200 ),
+        'query_args' => array( 'type' => 'image' )
+    ) );
+
     $cmb_locations_metabox = new_cmb2_box( array(
         'id'            => $prefix . 'locations_metabox',
         'title'         => esc_html__( 'Locations - Extra Info', 'shibuya' ),

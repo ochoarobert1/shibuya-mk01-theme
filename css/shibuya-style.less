@@ -1,4 +1,4 @@
-// compress: false, strictMath: true, javascriptEnabled: true
+// compress: false, javascriptEnabled: true
 /* --------------------------------------------------------------
 /* MAIN LESS MIXINS AND FUNCTIONS - LESSHAT
 -------------------------------------------------------------- */
@@ -102,7 +102,7 @@ a {
 .top-header {
     background: rgba(27, 27, 27, 0.65);
     color: @white;
-    padding: 0.2rem 1rem;
+    padding: 0.5rem 1rem;
     z-index: 10;
 
     & .top-center {
@@ -111,6 +111,7 @@ a {
         & a {
             color: @white;
             padding: 0 1rem;
+            font-size: 1.3rem;
 
             &:hover {
                 color: @orange;
@@ -120,16 +121,21 @@ a {
 
     & .top-right {
         text-align: right;
-        font-size: .9rem;
+        font-size: 1rem;
 
         & .fa {
             margin-right: 10px;
+        }
+
+        & .top-header-cart-container {
+            color: @white;
         }
     }
 }
 
 .the-header {
     z-index: 10;
+    background: rgba(0, 0, 0, 0.65);
 
     & .logo-container {
         text-align: center;
@@ -171,16 +177,103 @@ a {
                     font-family: @quicksand;
                     color: @orange;
                     text-transform: uppercase;
-                    font-weight: 500;
-                    font-size: 1rem;
+                    font-weight: 600;
+                    font-size: 1.2rem;
+                    text-shadow: 0 0 3px black;
                     padding: .3rem 2rem;
 
                     &:hover {
-                        color: @lightorange;
+                        color: #555;
                     }
                 }
             }
         }
+    }
+}
+
+.header-mobile {
+    position: relative;
+    z-index: 10;
+    padding: 1rem;
+
+    & .navbar-mobile-container {
+        text-align: right;
+        .display(flex);
+        align-items: center;
+        justify-content: flex-end;
+        padding-top: 1.5rem;
+
+        & .menu-mobile-button {
+            position: relative;
+            height: 50px;
+            width: 50px;
+            cursor: pointer;
+
+            & span {
+                position: absolute;
+                display: block;
+                left: 0;
+                width: 40px;
+                height: 2px;
+                background: @orange;
+                .transition(all .3s ease-in-out);
+
+                &:nth-child(1) {
+                    top: 0;
+                }
+
+                &:nth-child(2) {
+                    top: 10px;
+                }
+
+                &:nth-child(3) {
+                    top: 20px;
+                }
+            }
+        }
+
+        & .menu-mobile-button-opened {
+            & span {
+                &:nth-child(1) {
+                    top: 10px;
+                    transform: rotate(45deg);
+                }
+
+                &:nth-child(2) {
+                    display: none;
+                }
+
+                &:nth-child(3) {
+                    top: 10px;
+                    transform: rotate(-45deg);
+                }
+            }
+        }
+    }
+
+    & .menu-mobile-content {
+        overflow: hidden;
+        .transition(all .3s ease-in-out);
+
+        & .menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            & .nav-item {
+                & .nav-link {
+                    color: @orange;
+
+                    &:hover {
+                        color: #555;
+                    }
+                }
+            }
+        }
+    }
+
+    & .menu-mobile-hidden {
+        height: 0;
     }
 }
 
@@ -212,10 +305,15 @@ a {
 
             & li {
                 & a {
+                    font-family: @quicksand;
                     padding: 1rem;
                     color: @white;
                     font-size: .9rem;
                     text-transform: uppercase;
+
+                    &:hover {
+                        color: #555;
+                    }
                 }
             }
         }
@@ -258,6 +356,7 @@ a {
 }
 
 .footer-menu a {
+    font-family: @quicksand;
     padding: 0.5rem !important;
     display: block;
 }
@@ -285,7 +384,7 @@ a {
 3.- HOME
 -------------------------------------------------------------- */
 .main-slider-container {
-    margin-top: -205px;
+    margin-top: -230px;
 }
 
 
@@ -304,11 +403,11 @@ a {
         content: '';
         position: absolute;
         top: 0px;
-        left: -820px;
-        background: rgba(0, 0, 0, 0.65);
-        width: 200%;
-        height: 200%;
-        transform: rotate(40deg);
+        right: -30%;
+        width: 100vw;
+        height: 500px;
+        background: rgba(0, 0, 0, 0.75);
+        transform: rotate(45deg);
     }
 
     & .custom-boxed-element-wrapper {
@@ -318,21 +417,21 @@ a {
         padding: 3rem 1rem;
 
         & h2 {
-            font-family: @opensans;
+            font-family: @quicksand;
             font-size: 2.4rem;
             font-weight: 800;
             margin: 0;
         }
 
         & h3 {
-            font-family: @opensans;
+            font-family: @quicksand;
             color: @orange;
             font-size: 1.4rem;
             font-weight: 800;
         }
 
         & h5 {
-            font-family: @opensans;
+            font-family: @quicksand;
             color: @white;
             font-size: 1rem;
             font-weight: 700;
@@ -360,10 +459,15 @@ a {
 
 .custom-boxed-element-inverted {
     &:before {
-        bottom: unset;
-        left: unset;
-        top: -400px;
-        right: -122.5%;
+        content: '';
+        position: absolute;
+        top: 0px;
+        right: unset;
+        left: -20%;
+        width: 100vw;
+        height: 500px;
+        background: rgba(0, 0, 0, 0.75);
+        transform: rotate(45deg);
     }
 
     & .custom-boxed-element-wrapper {
@@ -473,7 +577,7 @@ a {
         text-align: center;
         font-size: 1rem;
         font-weight: 300;
-        line-height: 0.5rem;
+        line-height: 1.5rem;
 
         & h4 {
             font-family: @opensans;
@@ -656,11 +760,23 @@ a {
 }
 
 .contact-form-container {
+    & .contact-form-item {
+        margin-bottom: 1rem;
+        padding: 0 .5rem;
+    }
+
+    & .custom-danger {
+        text-align: left;
+        display: block;
+        margin-top: 0.5rem;
+        font-weight: 600;
+        font-size: 0.8rem;
+    }
+
     & .custom-form-control {
         font-family: @quicksand;
         font-weight: 500;
         border: 0;
-        margin-bottom: 1rem;
         border-radius: 0;
         font-size: 1.1rem;
     }
@@ -867,43 +983,7 @@ a {
     }
 }
 
-.woocommerce-products-header {
-    margin: 1rem 0;
-    margin-bottom: 2rem;
-    text-align: center;
 
-    .woocommerce-products-header__title {
-        position: relative;
-        font-size: 2.1rem;
-        display: inline-block;
-        margin: 0;
-        text-transform: uppercase;
-        font-weight: 800;
-        text-shadow: 0 0 16px black;
-
-        &:before {
-            content: '';
-            background: url(../images/lineaizq.jpg);
-            position: absolute;
-            top: 20px;
-            left: -200px;
-            width: 212px;
-            height: 1px;
-            z-index: -1;
-        }
-
-        &:after {
-            content: '';
-            background: url(../images/lineader.jpg);
-            position: absolute;
-            top: 20px;
-            right: -200px;
-            width: 212px;
-            height: 1px;
-            z-index: -1;
-        }
-    }
-}
 
 .product-sidebar {
     list-style: none;
@@ -937,7 +1017,11 @@ a {
         line-height: 2rem;
 
         & a {
+            font-family: @quicksand;
             color: @white;
+            font-size: 1.4rem;
+            margin-bottom: 0.6rem;
+            display: block;
 
             &:hover {
                 color: @orange;
@@ -954,8 +1038,8 @@ a {
         }
 
         & button {
-            background: @orange;
-            border: 4px solid @white;
+            background: #393939;
+            border: 4px solid #393939;
             color: @white;
             font-weight: 800;
             font-size: 1.1rem;
@@ -988,18 +1072,28 @@ a {
     }
 }
 
+.woocommerce .widget_price_filter .ui-slider-horizontal {
+    height: 5px;
+    background: #222 !important;
+}
+
+.woocommerce .widget_price_filter .ui-slider .ui-slider-handle {
+    width: 0.8rem;
+    height: 0.8rem;
+}
+
 .woocommerce .widget_price_filter .ui-slider .ui-slider-handle {
     background: @lightorange;
 }
 
 .woocommerce .widget_price_filter .ui-slider .ui-slider-range {
-    background: @lightorange;
+    background: #444;
 }
 
 .woocommerce .widget_price_filter .price_slider_amount .button {
-    background: @orange;
     color: @white;
-    border: 4px solid @white;
+    background: #393939;
+    border: 4px solid #393939;
     border-radius: 0;
     font-size: 1.1rem;
     text-transform: uppercase;
@@ -1075,6 +1169,9 @@ a {
     width: 3.631em;
     text-align: center;
     min-height: 44.5px;
+    background: none;
+    color: white;
+    border: 1px solid #393939;
 }
 
 .woocommerce-product-details__short-description {
@@ -1089,8 +1186,8 @@ a {
 .woocommerce a.button.alt,
 .woocommerce button.button.alt,
 .woocommerce input.button.alt {
-    background: @orange;
-    border: 4px solid @white;
+    background: #393939;
+    border: 4px solid #393939;
     font-size: 1rem;
     font-weight: 800;
     text-transform: uppercase;
@@ -1182,7 +1279,8 @@ a {
 
 }
 
-.related h2 {
+.related h2:first-of-type {
+    margin-bottom: 3rem;
     text-align: center;
     font-size: 2.2rem;
     font-weight: 800;
@@ -1195,31 +1293,64 @@ a {
 .woocommerce-message {
     background-color: #000000;
     color: white;
-    border: 1px solid #474747;
+    border: 0;
+}
+
+.woocommerce .woocommerce-message .button,
+.woocommerce-page .woocommerce-message .button {
+    float: right;
+    background: @orange;
+    border-radius: 0;
+    color: @white;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &:hover {
+        background: #444;
+        color: @white;
+    }
 }
 
 .woocommerce table.shop_table {
-    border: 1px solid rgba(135, 135, 135, 0.43);
+    font-family: @quicksand;
+    border: 1px solid @white;
     border-radius: 0;
+    border-collapse: collapse !important;
+
 
     & th {
-        border-bottom: 1px solid white;
+        border-bottom: 1px solid #ffffff !important;
         background: #444;
     }
 
     & .cart_item {
         & td {
-            border-bottom: 1px solid white !important;
+            border-bottom: 1px solid @white  !important;
+            padding: .5rem;
 
             & a {
                 color: @white;
             }
         }
 
+        & .product-thumbnail img {
+            display: block;
+            width: 100px;
+            margin: 0 auto;
+        }
+
         & .product-name a {
             font-weight: 800;
             text-transform: uppercase;
             font-size: 1.2rem;
+        }
+
+        & .product-name h6 {
+            font-size: 0.9rem;
+            color: @orange;
+            letter-spacing: -0.5px;
+            font-weight: 700;
         }
 
         & .product-subtotal {
@@ -1233,10 +1364,10 @@ a {
     }
 
     & .button {
-        background: @orange;
         color: @white;
         border-radius: 0;
-        border: 4px solid white;
+        background: #393939;
+        border: 4px solid #393939;
         text-transform: uppercase;
         font-weight: 800;
         letter-spacing: 1px;
@@ -1368,15 +1499,25 @@ a {
     & input.input-text,
     & textarea {
         padding: 0.5rem;
+        background: #181818 !important;
+        border: 1px solid #505050 !important;
+        box-shadow: none !important;
+        color: white;
+
+        .placeholder(white);
     }
 
-    & .select2-container .select2-selection--single {
-        height: unset;
+    & .woocommerce form .form-row .select2-container .select2-selection--single {
+        height: 41px;
+        background: none;
+        border: 1px solid white;
+        border-radius: 0;
+        padding-top: 0.3rem;
     }
 }
 
 .woocommerce-checkout-review-order-table {
-    border: 1px solid white !important;
+    border: 1px solid @white  !important;
 
     & tfoot {
         & tr {
@@ -1384,7 +1525,7 @@ a {
             & th,
             & td {
                 background: none !important;
-                border-bottom: 1px solid white !important;
+                border-bottom: 1px solid @white  !important;
             }
 
             &:last-child th,
@@ -1421,4 +1562,213 @@ a {
     &:hover {
         background: #444;
     }
+}
+
+
+.main-woocommerce-title-container {
+    position: relative;
+    padding: 6.5rem;
+    z-index: -1;
+    background-size: cover !important;
+    background-position: center center !important;
+    margin-bottom: 2rem;
+
+    & .woocommerce-products-header {
+        position: absolute;
+        margin: 0;
+        text-align: center;
+        top: 0;
+        left: 0;
+        .display(flex);
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+
+        .woocommerce-products-header__title {
+            position: relative;
+            font-size: 2.1rem;
+            display: inline-block;
+            margin: 0;
+            text-transform: uppercase;
+            font-weight: 800;
+            text-shadow: 0 0 16px black;
+            z-index: 1;
+        }
+    }
+}
+
+.woocommerce nav.woocommerce-pagination ul {
+    border: 0;
+    font-size: 1.3rem;
+
+
+    & li {
+        border-right: 0;
+
+        & a {
+            border: 0;
+            font-weight: 600 !important;
+            color: white;
+
+            &:hover {
+                background: none !important;
+                color: #999999 !important;
+            }
+        }
+
+        & span.current {
+            font-weight: 900 !important;
+            background: transparent;
+            color: #ff9501;
+        }
+    }
+}
+
+.btn-floating {
+    position: fixed;
+    bottom: 15px;
+    left: 15px;
+    z-index: 9999;
+    background: @white;
+    padding: 1rem 0;
+    border-radius: 100%;
+    max-width: 80px;
+    height: 80px;
+    color: @black;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.60);
+}
+
+.product-name textarea {
+    width: 90%;
+    color: @white;
+    background: #121212;
+    border: 1px solid #3e3e3e;
+}
+
+section.related {
+    clear: both;
+    margin-top: 3rem;
+    display: block;
+    width: 100%;
+}
+
+
+.opentable-container {
+    position: fixed;
+    top: 35%;
+    left: 0;
+    z-index: 15;
+    .transition(all .3s ease-in-out);
+}
+
+.btn-opentable {
+    position: fixed;
+    z-index: 10;
+    top: 50%;
+    left: -55px;
+    transform: rotate(270deg);
+    cursor: pointer;
+    color: @black  !important;
+    background: @white  !important;
+    font-size: 0.8rem;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.btn-opentable-close {
+    position: absolute;
+    top: 45%;
+    right: -25px;
+    cursor: pointer;
+    transform: rotate(270deg);
+    background: @white;
+    color: @black;
+    padding: 0 1rem;
+    border-radius: 5px;
+    z-index: 15;
+}
+
+.opentable-container-hidden {
+    left: -250px;
+    .transition(all .3s ease-in-out);
+}
+
+
+.product-type-composite .woocommerce-product-gallery {
+    width: 30% !important;
+}
+
+.product-type-composite .entry-summary {
+    width: 68% !important;
+}
+
+ul.component_option_thumbnails_container {
+    margin: 0;
+    padding: 0;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+
+.composite_pagination .element_link {
+    font-size: 0.8rem;
+}
+
+.select2-container--default .select2-selection--single {
+    background-color: #181818;
+    border: 1px solid #505050;
+    height: 40px;
+    padding-top: 5px;
+    color: @white;
+    border-radius: 0;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 40px;
+    position: absolute;
+    top: 0px;
+    right: 4px;
+    width: 20px;
+}
+
+#ship-to-different-address {
+    letter-spacing: 1px;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 1.3rem;
+}
+
+
+.woocommerce-billing-fields h3 {
+    letter-spacing: 1px;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 1.3rem;
+}
+
+.woocommerce form .form-row label,
+.woocommerce-page form .form-row label {
+    display: block;
+    font-family: @quicksand;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* PARA PRODUCTOS */
+.product-sidebar .product-categories .cat-item-63 {
+    display: none;
+}
+
+.xt_woovs-selected .swatch-image-inner {
+    border: 1px solid @orange;
+}
+
+.custom-locations-home-section .vc_col-sm-3 {
+    width: 100%;
+    float: none;
 }

@@ -1,3 +1,14 @@
+
+<a href="<?php echo get_permalink( wc_get_page_id( 'shop' ) ); ?>
+         " class="btn btn-md btn-floating"><?php _e('Order Now!', 'shibuya'); ?></a>
+
+<a class="btn btn-md btn-opentable"><?php _e('Make a Reservation', 'shibuya'); ?></a>
+
+<div class="opentable-container opentable-container-hidden">
+    <script type='text/javascript' src='//www.opentable.com/widget/reservation/loader?rid=1070083&type=standard&theme=standard&iframe=true&domain=com&lang=en-US&newtab=false&ot_source=Restaurant%20website&ot_campaign=website'></script>
+    <div class="btn-opentable-close"><i class="fa fa-chevron-up"></i></div>
+</div>
+
 <footer class="container-fluid p-0" role="contentinfo" itemscope itemtype="http://schema.org/WPFooter">
     <div class="row no-gutters">
         <div class="the-footer col-12">
@@ -13,7 +24,7 @@
                         wp_nav_menu( array(
                             'container_class' => 'menu-footer',
                             'theme_location' => 'footer_menu',
-                            'items_wrap'     => '<ul class="nav">%3$s</ul>'
+                            'items_wrap'     => '<ul class="custom-nav">%3$s</ul>'
                         ) );
                         ?>
                     </div>
@@ -51,6 +62,12 @@
             <a href="<?php echo esc_url($social_options['linkedin']);?>" title="<?php _e('Visita nuestro Perfil en LinkedIn', 'shibuya'); ?>" target="_blank"><i class="fa fa-linkedin"></i></a>
             <?php } ?>
             <?php } ?>
+
+            <?php if (isset($social_options['yelp'])) { ?>
+            <?php if ($social_options['yelp'] != '') { ?>
+            <a href="<?php echo esc_url($social_options['yelp']);?>" title="<?php _e('Visita nuestro Perfil en Yelp', 'shibuya'); ?>" target="_blank"><i class="fa fa-yelp"></i></a>
+            <?php } ?>
+            <?php } ?>
             <div class="go-top">
                 <a href="#top" title="<?php _e('Go to top', 'shibuya'); ?>"><i class="fa fa-chevron-up"></i></a>
             </div>
@@ -69,7 +86,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                
+
             </div>
         </div>
     </div>

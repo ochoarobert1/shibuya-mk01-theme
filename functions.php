@@ -194,7 +194,7 @@ if ( function_exists('add_theme_support') ) {
 }
 if ( function_exists('add_image_size') ) {
     add_image_size('avatar', 100, 100, true);
-    add_image_size('logo', 9999, 100, false);
+    add_image_size('logo', 9999, 150, false);
     add_image_size('blog_img', 276, 217, true);
     add_image_size('shop_catalog', 300, 300, array('center', 'center'));
     add_image_size('single_img', 636, 297, true );
@@ -230,5 +230,111 @@ function ajax_product_quickview_handler() {
 </div>
 
 <?php 
+    wp_die();
+}
+
+/* --------------------------------------------------------------
+    AJAX SEND CONTACT FORM
+-------------------------------------------------------------- */
+add_action('wp_ajax_ajax_send_contact_form', 'ajax_send_contact_form_handler');
+add_action('wp_ajax_nopriv_ajax_send_contact_form', 'ajax_send_contact_form_handler');
+
+function ajax_send_contact_form_handler() {
+    $google_settings = get_option('sy_google_settings');
+
+    parse_str($_POST['info'], $submit);
+
+    if ($submit["g-recaptcha-response"]) {
+        $post_data = http_build_query(
+            array(
+                'secret' => $google_settings['google_secret'],
+                'response' => $submit['g-recaptcha-response'],
+                'remoteip' => $_SERVER['REMOTE_ADDR']
+            ), '', '&');
+        $opts = array('http' =>
+                      array(
+                          'method'  => 'POST',
+                          'header'  => 'Content-type: application/x-www-form-urlencoded',
+                          'content' => $post_data
+                      )
+                     );
+        $context  = stream_context_create($opts);
+        $response = file_get_contents('https://www.google.com/recaptcha/api/siteverify', false, $context);
+        $result = json_decode($response);
+    }
+    if($result->success == true) {
+
+        $contact_fields  = array(
+            'fullname' => __('Name', 'shibuya'),
+            'email' => __('Email', 'shibuya'),
+            'subject' => __('Subject', 'shibuya'),
+            'message' => __('Message', 'shibuya'),
+            'g-recaptcha-response' => ''
+        );
+
+
+
+        global $title;
+        $title = __('Shibuya Sushi Art - Contact Message', 'shibuya');
+
+        ob_start();
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <?php global $title ?>
+        <title><?php echo $title ?></title>
+    </head>
+
+    <body>
+
+        <div style="color:#444; max-width: 600px; border: 1px solid #cccccc; padding: 15px; box-shadow: 0 0 2px #999999; margin: auto; font-family:Open-sans, sans-serif;">
+            <h2 style="margin-bottom: 2px; margin-top: 2px;"><?php echo $title ?></h2>
+            <p style="margin-top: 2px; margin-bottom: 2px"><?php _e('Sent', 'shibuya'); ?>: <?php echo date("Y/m/d h:i") ?></p>
+            <hr style="border: solid 2px #444">
+            <div style="border: solid 1px #cccccc; background-color: #eeeeee; padding: 15px; margin-top: 15px;">
+                <?php 
+            foreach ($contact_fields as $key => $field) {
+                if ($key != 'g-recaptcha-response') { 
+                    $field_value = apply_filters('mailto', $submit[$key]);
+                    printf('<p style="margin: 5px 0;"><strong>%s</strong>: %s</p>', $field, $field_value);
+                }
+            }
+                ?>
+            </div>
+        </div>
+    </body>
+
+</html>
+<?php 
+        $content = ob_get_clean();
+
+        require_once ABSPATH . WPINC . '/class-phpmailer.php';
+        $mail = new PHPMailer();
+        $email = 'ochoa.robert1@gmail.com';
+        $mail->AddAddress($email);
+        //    $mail->AddAddress("nefasdrain@gmail.com");
+        $mail->From = 'noreply@' . $_SERVER['SERVER_NAME'];
+        $mail->FromName = get_option('blogname');
+        $mail->Subject = $title;
+        $mail->Body = $content;
+        $mail->IsHTML();
+        $mail->CharSet = 'utf-8';
+
+        $result = $mail->Send();
+
+        if ($result) {
+            echo 'true';
+        } else {
+            echo 'false';
+        }
+
+    } else {
+        echo 'false';
+    }
+
     wp_die();
 }
