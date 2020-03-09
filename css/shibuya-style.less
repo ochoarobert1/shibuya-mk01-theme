@@ -97,7 +97,7 @@ a {
 }
 
 /* --------------------------------------------------------------
-1.- HEADER 
+1.- HEADER
 -------------------------------------------------------------- */
 .top-header {
     background: rgba(27, 27, 27, 0.65);
@@ -191,6 +191,10 @@ a {
     }
 }
 
+.header-cart-label {
+    display: inline-block;
+}
+
 .header-mobile {
     position: relative;
     z-index: 10;
@@ -278,7 +282,7 @@ a {
 }
 
 /* --------------------------------------------------------------
-2.- FOOTER 
+2.- FOOTER
 -------------------------------------------------------------- */
 .the-footer {
     background: @darkgray;
@@ -611,6 +615,10 @@ a {
                 background: #333333;
             }
         }
+
+        & .btn-location-order {
+            background: red;
+        }
     }
 
     & .custom-location-additional {
@@ -815,7 +823,7 @@ a {
         text-transform: uppercase;
         font-family: @montserrat;
         font-weight: 900;
-        font-size: 1.1rem;
+        font-size: .95rem;
         padding-bottom: 0;
     }
 
@@ -944,16 +952,13 @@ a {
             position: relative;
 
             & h2 {
-                font-weight: 900;
-                text-transform: uppercase;
-                font-size: 1.8rem;
+                font-family: @quicksand;
+                font-size: 1.5rem;
+                font-weight: 800;
             }
 
             & .product-quickview-price {
                 color: @lightorange;
-                position: absolute;
-                top: 0px;
-                right: 40px;
                 font-weight: 600;
                 font-size: 1.6rem;
             }
@@ -1152,7 +1157,8 @@ a {
 }
 
 .woocommerce div.product .product_title {
-    font-size: 2rem;
+    font-family: @quicksand;
+    font-size: 1.5rem;
     font-weight: 800;
     text-transform: uppercase;
 }
@@ -1186,8 +1192,8 @@ a {
 .woocommerce a.button.alt,
 .woocommerce button.button.alt,
 .woocommerce input.button.alt {
-    background: #393939;
-    border: 4px solid #393939;
+    background: red;
+    border: 4px solid @white;
     font-size: 1rem;
     font-weight: 800;
     text-transform: uppercase;
@@ -1291,7 +1297,7 @@ a {
 .woocommerce-error,
 .woocommerce-info,
 .woocommerce-message {
-    background-color: #000000;
+    background-color: #1d1d1d;
     color: white;
     border: 0;
 }
@@ -1631,12 +1637,12 @@ a {
     bottom: 15px;
     left: 15px;
     z-index: 9999;
-    background: @white;
+    background: red;
     padding: 1rem 0;
     border-radius: 100%;
     max-width: 80px;
     height: 80px;
-    color: @black;
+    color: @white;
     font-family: 'Montserrat', sans-serif;
     font-size: 1rem;
     font-weight: 800;
@@ -1673,8 +1679,8 @@ section.related {
     left: -55px;
     transform: rotate(270deg);
     cursor: pointer;
-    color: @black  !important;
-    background: @white  !important;
+    color: white !important;
+    background: #fe0000 !important;
     font-size: 0.8rem;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -1768,7 +1774,151 @@ ul.component_option_thumbnails_container {
     border: 1px solid @orange;
 }
 
-.custom-locations-home-section .vc_col-sm-3 {
-    width: 100%;
+
+.product-not-available {
+    font-size: 1.3rem;
+    letter-spacing: -.5px;
+    font-weight: 300;
+}
+
+
+/* product addon */
+.wc-pao-addon {
+    margin-top: 8px;
+    .display(flex);
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    & .wc-pao-addon-name {
+        font-weight: 900;
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        background: #a66d00;
+        padding: 0.3rem 1rem;
+        flex: 0 0 100%;
+    }
+
+    & .wc-pao-addon-description {
+        flex: 0 0 100%;
+        font-size: 0.9rem;
+        font-weight: 400;
+        font-style: italic;
+    }
+
+    & .wc-pao-addon-checkbox-group-required {
+        .display(flex);
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    & .wc-pao-addon-wrap {
+        flex: 0 0 33%;
+        max-height: unset;
+
+        & label {
+            font-size: 0.9rem !important;
+        }
+    }
+
+    & .wc-pao-addon-heading {
+        font-weight: 900;
+        text-transform: uppercase;
+        font-size: 1.5rem;
+        letter-spacing: -.5px;
+    }
+}
+
+.product-addon-totals ul li {
+    font-size: 0.9rem;
+    padding: 0.2rem 0 !important;
+    font-weight: 400;
+
+    &:nth-child(1) {
+        font-size: 1.1rem;
+    }
+}
+
+
+.woocommerce .quantity .product_quantity_minus,
+.woocommerce .quantity .product_quantity_plus {
+    width: 45px;
+    height: 44px;
+    text-align: center;
+    color: white;
+    background: #b26600;
+    border: 1px solid #b26600;
+    border-radius: 0;
+    font-size: 1.6rem;
+    line-height: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 18px;
+}
+
+.woocommerce .quantity .qty {
+    display: inline-block;
+    height: 17px;
+
+}
+
+/* Smartphone - portrait (max 479px) */
+@media screen and (max-width: 479px) {
+
+    .woocommerce .shop_table.cart .quantity .product_quantity_minus,
+    .woocommerce .shop_table.cart .quantity .product_quantity_plus {
+        width: 29px;
+        height: 18px;
+        display: block;
+        padding: 3px 5px 3px 20px;
+    }
+}
+
+input[type=number] {
+    -moz-appearance: textfield !important;
+}
+
+input {
+    &::-webkit-outer-spin-button &::-webkit-inner-spin-button {
+        display: none;
+        -webkit-appearance: none !important;
+        margin: 0 !important;
+    }
+}
+
+.shipping-calculator-button {
+    background: #b26600;
+    color: white;
+    padding: 1rem;
+}
+
+.cart_totals tr.woocommerce-shipping-totals {
+    & label {
+        display: block;
+    }
+
+    & small {
+        color: @orange  !important;
+        font-size: 0.8rem;
+    }
+}
+
+.content-product-title-container {
+    & .woocommerce-price-suffix {
+        display: none !important;
+    }
+}
+
+.woocommerce #payment #place_order,
+.woocommerce-page #payment #place_order {
     float: none;
+    max-height: 50px;
+}
+
+.wc-pao-addon-select {
+    padding: 0.5rem;
+    border-radius: 5px;
 }

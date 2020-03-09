@@ -138,11 +138,17 @@ function shibuya_load_js() {
         wp_register_script('main-functions', get_template_directory_uri() . '/js/functions.js', array('jquery', 'recaptcha-js'), $version_remove, true);
         wp_enqueue_script('main-functions');
 
+        if ( class_exists( 'WooCommerce' ) ) {
+            $url_id = wc_get_page_id( 'cart' );
+        } else {
+            $url_id = '';
+        }
+
         /* LOCALIZE MAIN SHORTCODE SCRIPT */
         wp_localize_script( 'main-functions', 'admin_url', array(
             'ajax_custom_url' => admin_url('admin-ajax.php'),
             'google_site_key' => $google_settings['google_api'],
-            'cart_custom_url' => esc_url(get_permalink( wc_get_page_id( 'cart' ))),
+            'cart_custom_url' => esc_url(get_permalink($url_id)),
             'error_name' => __('Error: Name must not be empty', 'shibuya'),
             'invalid_name' => __('Error: Name must be valid', 'shibuya'),
             'error_email' => __('Error: Email must not be empty', 'shibuya'),

@@ -6,6 +6,22 @@ CUSTOM AREA FOR OPTIONS DATA - SANTIAGO DUARTE
 add_action( 'customize_register', 'shibuya_customize_register' );
 
 function shibuya_customize_register( $wp_customize ) {
+    $wp_customize->add_section( 'sy_opentable_settings', array(
+        'title'    => __( 'Open Table', 'shibuya' ),
+        'priority' => 190,
+    ) );
+
+    $wp_customize->add_setting( 'sy_opentable_settings[custom_js]', array(
+        'type' => 'option',
+    ) );
+
+    $wp_customize->add_control( new WP_Customize_Code_Editor_Control( $wp_customize, 'custom_html', array(
+        'label'     => 'Additional JS',
+        'type'      => 'textarea',
+        'settings'  => 'sy_opentable_settings[custom_js]',
+        'section'   => 'sy_opentable_settings',
+    ) ) );
+
     $wp_customize->add_section('sy_google_section', array(
         'title'    => __('Google Settings', 'shibuya'),
         'description' => '',

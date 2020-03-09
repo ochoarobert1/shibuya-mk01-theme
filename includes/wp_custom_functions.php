@@ -64,3 +64,27 @@ function get_post_id_by_name( $post_name, $post_type = 'post' )
 
     return array_shift( $post_ids );
 }
+
+function wpse198435_get_blog_timezone() {
+
+    $tzstring = get_option( 'timezone_string' );
+    $offset   = get_option( 'gmt_offset' );
+
+    //Manual offset...
+    //@see http://us.php.net/manual/en/timezones.others.php
+    //@see https://bugs.php.net/bug.php?id=45543
+    //@see https://bugs.php.net/bug.php?id=45528
+    //IANA timezone database that provides PHP's timezone support uses POSIX (i.e. reversed) style signs
+    if( empty( $tzstring ) && 0 != $offset && floor( $offset ) == $offset ){
+        $offset_st = $offset > 0 ? "-$offset" : '+'.absint( $offset );
+        $tzstring  = 'Etc/GMT'.$offset_st;
+    }
+
+    //Issue with the timezone selected, set to 'UTC'
+    if( empty( $tzstring ) ){
+        $tzstring = 'UTC';
+    }
+
+    $timezone = new DateTimeZone( $tzstring );
+    return $timezone; 
+}

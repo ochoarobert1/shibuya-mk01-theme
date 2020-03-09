@@ -5,7 +5,8 @@
 <a class="btn btn-md btn-opentable"><?php _e('Make a Reservation', 'shibuya'); ?></a>
 
 <div class="opentable-container opentable-container-hidden">
-    <script type='text/javascript' src='//www.opentable.com/widget/reservation/loader?rid=1070083&type=standard&theme=standard&iframe=true&domain=com&lang=en-US&newtab=false&ot_source=Restaurant%20website&ot_campaign=website'></script>
+    <?php $opentable = get_option('sy_opentable_settings'); ?>
+    <?php echo $opentable['custom_js']; ?>
     <div class="btn-opentable-close"><i class="fa fa-chevron-up"></i></div>
 </div>
 

@@ -21,6 +21,11 @@
                 <button type="submit" class="btn btn-md btn-primary btn-submit"><?php _e('Send Message', 'shibuya'); ?></button>
             </div>
             <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" />
+            <div class="contact-form-item d-xl-none d-lg-none d-md-none d-sm-none d-block">
+                This site is protected by reCAPTCHA and the Google
+                <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+                <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+            </div>
             <div class="contact-form-loader col-12"></div>
             <div class="contact-form-response col-12"></div>
         </div>

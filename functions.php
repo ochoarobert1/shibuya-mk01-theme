@@ -211,6 +211,12 @@ function ajax_product_quickview_handler() {
     $product_post = get_post($product_id);
     $product = wc_get_product($product_id);
 ?>
+<?php $comb_limit_act = get_post_meta($product_id, 'activate_limit', true); ?>
+<?php if ($comb_limit_act == 'yes') { ?>
+<?php $hidden_input = '<input type="hidden" name="limit_combinations" value="'. get_post_meta($product_id, 'limit_combinations', true).'" />'; ?>
+<?php } else { ?>
+<?php $hidden_input = ''; ?>
+<?php } ?>
 <div class="container-fluid">
     <div class="row">
         <div class="product-quickview-image col-6">
@@ -224,14 +230,41 @@ function ajax_product_quickview_handler() {
             <div class="product-quickview-info">
                 <?php echo apply_filters('the_content', $product->description); ?>
             </div>
-            <a href="<?php echo get_permalink($product_post); ?>" class="btn btn-sm btn-modal"><?php _e('Add to Cart', 'shibuya'); ?></a>
+            <div class="product-quickview-info">
+                <?php if ( $product && $product->is_type( 'simple' ) && $product->is_purchasable() && $product->is_in_stock() && ! $product->is_sold_individually() ) { ?>
+                <?php $avail_activate = get_post_meta($product_id, 'activate_availability', true); ?>
+                <?php if ($avail_activate == 'yes') { ?>
+                <?php $availability_start = get_post_meta($product_id, 'hour_start', true); ?>
+                <?php $availability_end = get_post_meta($product_id, 'hour_end', true); ?>
+                <?php $time = new DateTime('now', new DateTimeZone('-4')); ?>
+                <?php $now = new DateTime(); ?>
+                <?php $begin = new DateTime($availability_start); ?>
+                <?php $end = new DateTime($availability_end); ?>
+                <?php if ($time->format("Y-m-d H:i") >= $begin->format("Y-m-d H:i") && $time->format("Y-m-d H:i") <= $end->format("Y-m-d H:i")) { ?>
+                <?php $html = '<form action="' . esc_url( $product->add_to_cart_url() ) . '" class="cart" method="post" enctype="multipart/form-data">'; ?>
+                <?php $html .= woocommerce_quantity_input( array(), $product, false );?>
+                <?php $html .= '<button type="submit" class="button alt btn btn-sm btn-modal">' . esc_html( $product->add_to_cart_text() ) . '</button>'; ?>
+                <?php $html .= '</form>'; ?>
+                <?php } else { ?>
+                <h3 class="product-not-available"><?php printf( __('This product is available only between %s and %s hours', 'shibuya'), $availability_start, $availability_end); ?></h3>
+                <?php } ?>
+                <?php } else { ?>
+                <?php if ($comb_limit_act == 'yes') { ?>
+                <a href="<?php echo get_permalink($product_id); ?>" class="btn btn-sm btn-modal"><?php _e('Choose your options here', 'shibuya'); ?></a>
+                <?php } else { ?>
+                <?php $html = '<form action="' . esc_url( $product->add_to_cart_url() ) . '" class="cart" method="post" enctype="multipart/form-data">'; ?>
+                <?php $html .= woocommerce_quantity_input( array(), $product, false );?>
+                <?php $html .= '<button type="submit" class="button alt btn btn-sm btn-modal">' . esc_html( $product->add_to_cart_text() ) . '</button>'; ?>
+                <?php $html .= '</form>'; ?>
+                <?php } ?>
+                <?php } ?>
+                <?php echo $html; ?>
+                <?php } ?>
+            </div>
         </div>
     </div>
 </div>
-
-<?php 
-    wp_die();
-}
+<?php  wp_die(); }
 
 /* --------------------------------------------------------------
     AJAX SEND CONTACT FORM
@@ -296,9 +329,9 @@ function ajax_send_contact_form_handler() {
             <p style="margin-top: 2px; margin-bottom: 2px"><?php _e('Sent', 'shibuya'); ?>: <?php echo date("Y/m/d h:i") ?></p>
             <hr style="border: solid 2px #444">
             <div style="border: solid 1px #cccccc; background-color: #eeeeee; padding: 15px; margin-top: 15px;">
-                <?php 
+                <?php
             foreach ($contact_fields as $key => $field) {
-                if ($key != 'g-recaptcha-response') { 
+                if ($key != 'g-recaptcha-response') {
                     $field_value = apply_filters('mailto', $submit[$key]);
                     printf('<p style="margin: 5px 0;"><strong>%s</strong>: %s</p>', $field, $field_value);
                 }
@@ -309,7 +342,7 @@ function ajax_send_contact_form_handler() {
     </body>
 
 </html>
-<?php 
+<?php
         $content = ob_get_clean();
 
         require_once ABSPATH . WPINC . '/class-phpmailer.php';

@@ -6,6 +6,24 @@ function isValidEmailAddress(emailAddress) {
     return pattern.test(emailAddress);
 }
 
+// Restricts input for each element in the set of matched elements to the given inputFilter.
+(function ($) {
+    $.fn.inputFilter = function (inputFilter) {
+        return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function () {
+            if (inputFilter(this.value)) {
+                this.oldValue = this.value;
+                this.oldSelectionStart = this.selectionStart;
+                this.oldSelectionEnd = this.selectionEnd;
+            } else if (this.hasOwnProperty("oldValue")) {
+                this.value = this.oldValue;
+                this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+            } else {
+                this.value = "";
+            }
+        });
+    };
+}(jQuery));
+
 function reCAPTCHA_execute() {
     // grecaptcha instantiated by external script from Google
     // reCAPTCHA_site_key comes from backend
@@ -23,6 +41,72 @@ jQuery(document).ready(function ($) {
     grecaptcha.ready(function () {
         reCAPTCHA_execute();
         setInterval(reCAPTCHA_execute, 60000);
+    });
+
+    var limit = jQuery('input[name=limit_combinations]').val();
+    var qty_check = 0;
+
+    jQuery('.wc-pao-addon-toppings input[type=checkbox]').on('change', function (evt) {
+        qty_check = jQuery(".wc-pao-addon-toppings input[type=checkbox]:checked").length;
+        if (qty_check > limit) {
+            this.checked = false;
+        }
+    });
+
+    jQuery('.product_cat-poke-bowls .wc-pao-addon-toppings input[type=checkbox]').on('change', function (evt) {
+        qty_check = jQuery(".wc-pao-addon-toppings input[type=checkbox]:checked").length;
+        if (qty_check > 4) {
+            jQuery(this).data('raw-price', 1);
+            jQuery(this).data('price', 1);
+        } else {
+            jQuery('.product_cat-poke-bowls .wc-pao-addon-toppings input[type=checkbox]').each(function () {
+                jQuery(this).data('raw-price', '');
+                jQuery(this).data('price', '');
+            });
+        }
+    });
+
+
+
+
+    jQuery('.wc-pao-addon-combinations input[type=checkbox]').on('change', function (evt) {
+        qty_check = jQuery(".wc-pao-addon-combinations input[type=checkbox]:checked").length;
+        if (qty_check > limit) {
+            this.checked = false;
+        }
+    });
+
+    jQuery('.qty').before('<span class="product_quantity_minus">-</span>');
+    jQuery('.qty').after('<span class="product_quantity_plus">+</span>');
+    jQuery('.qty').inputFilter(function (value) {
+        return /^\d*$/.test(value); // Allow digits only, using a RegExp
+    });
+
+    jQuery(".product_quantity_minus").click(function (e) {
+        var quantityInput = $(this).closest(".quantity").children("input");
+        var currentQuantity = parseInt($(quantityInput).val());
+        if (isNaN(currentQuantity)) {
+            currentQuantity = 0;
+        }
+        var newQuantity = (currentQuantity > 1) ? (currentQuantity - 1) : 1;
+        $(quantityInput).val(newQuantity);
+        if (('button[name=update_cart]').length) {
+            jQuery('button[name=update_cart]').prop('disabled', false);
+        }
+    });
+
+    jQuery(".product_quantity_plus").click(function (e) {
+        var max_quantity = 99999;
+        var quantityInput = $(this).closest(".quantity").children("input");
+        var currentQuantity = parseInt($(quantityInput).val());
+        if (isNaN(currentQuantity)) {
+            currentQuantity = 0;
+        }
+        var newQuantity = (currentQuantity >= max_quantity) ? max_quantity : (currentQuantity + 1);
+        $(quantityInput).val(newQuantity);
+        if (('button[name=update_cart]').length) {
+            jQuery('button[name=update_cart]').prop('disabled', false);
+        }
     });
 
     jQuery('.btn-quickview').on('click', function (e) {
@@ -240,34 +324,39 @@ jQuery(document).ready(function ($) {
         var $thisbutton = $(this),
             id = jQuery(this).data('id');
 
-        var data = {
-            action: 'woocommerce_ajax_add_to_cart',
-            product_id: jQuery(this).data('id'),
-            product_sku: jQuery(this).data('sku'),
-            quantity: 1,
-            variation_id: 0
-        };
+        if (jQuery(this).hasClass('disabled')) {
+            console.log('true');
+            var custom_url = jQuery(this).data('url');
+            location.href = custom_url;
+        } else {
+            console.log('false');
+            var data = {
+                action: 'woocommerce_ajax_add_to_cart',
+                product_id: jQuery(this).data('id'),
+                product_sku: jQuery(this).data('sku'),
+                quantity: 1,
+                variation_id: 0
+            };
 
-        $(document.body).trigger('adding_to_cart', [$thisbutton, data]);
+            $(document.body).trigger('adding_to_cart', [$thisbutton, data]);
 
-        $.ajax({
-            type: 'post',
-            url: wc_add_to_cart_params.ajax_url,
-            data: data,
-            beforeSend: function (response) {
-                jQuery('.response-ajax-container-' + id).html('<div class="ajax-loader"><div class="lds-ripple"><div></div><div></div></div></div>');
-            },
-            success: function (response) {
-                if (response.error & response.product_url) {
-                    window.location = response.product_url;
-                    return;
-                } else {
-                    jQuery('.response-ajax-container-' + id).html('<span>Added to Cart</span><a href="' + admin_url.cart_custom_url + '">View Cart</a>');
-                    $(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash, '']);
-                }
-            },
-        });
+            $.ajax({
+                type: 'post',
+                url: wc_add_to_cart_params.ajax_url,
+                data: data,
+                beforeSend: function (response) {
+                    jQuery('.response-ajax-container-' + id).html('<div class="ajax-loader"><div class="lds-ripple"><div></div><div></div></div></div>');
+                },
+                success: function (response) {
+                    if (response.error & response.product_url) {
+                        window.location = response.product_url;
+                        return;
+                    } else {
+                        jQuery('.response-ajax-container-' + id).html('<span>Added to Cart</span><a href="' + admin_url.cart_custom_url + '">View Cart</a>');
+                        $(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash, '']);
+                    }
+                },
+            });
+        }
     });
-
-
 })(jQuery);

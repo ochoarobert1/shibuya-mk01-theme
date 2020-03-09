@@ -145,6 +145,10 @@ MEDIAQUERIES LG/MD - LAYOUTS BIGGER THAN 992px
 MEDIAQUERIES SM - LAYOUTS BIGGER THAN 768px
 -------------------------------------------------------------- */
 @media (max-width: 991px) {
+  .custom-locations-home-section .vc_col-sm-3 {
+    width: 100%;
+    float: none;
+  }
   .main-slider-container {
     margin-top: 0;
   }
@@ -206,15 +210,18 @@ MEDIAQUERIES SM - LAYOUTS BIGGER THAN 768px
 MEDIAQUERIES XS - LAYOUTS LESS THAN 768px
 -------------------------------------------------------------- */
 @media (max-width: 600px) {
+  .custom-maps-section .custom-map-info .custom-map-info-item:nth-child(1):after {
+    display: none;
+  }
   .custom-boxed-element .custom-boxed-element-wrapper {
-    bottom: 20%;
+    bottom: 0;
     width: 100%;
     text-align: center;
   }
   .custom-boxed-element-inverted .custom-boxed-element-wrapper {
     bottom: unset;
     left: unset;
-    top: 20%;
+    top: 0;
     text-align: center;
   }
   .custom-title-section h2:before {
@@ -233,11 +240,23 @@ MEDIAQUERIES XS - LAYOUTS LESS THAN 768px
   .woocommerce-page ul.products li.product .custom-image-wrapper .custom-image-data-wrapper h2 {
     font-size: 1.1rem;
   }
+  .main-woocommerce-custom-single-container .custom-single-category-container {
+    position: unset;
+    top: 0;
+    right: 0;
+  }
+  .main-woocommerce-custom-single-container .custom-single-category-container a {
+    padding: 1rem 0;
+    font-size: 1.2rem;
+  }
 }
 @media (max-width: 533px) {
   .custom-title-section h2:before {
     width: 270px;
-    left: 19%;
+    left: 10%;
+  }
+  .grecaptcha-badge {
+    visibility: hidden;
   }
   .woocommerce ul.products li.product .woocommerce-loop-product__title,
   .woocommerce-page ul.products li.product .woocommerce-loop-product__title {
@@ -255,10 +274,22 @@ MEDIAQUERIES XS - LAYOUTS LESS THAN 768px
     display: block;
     width: 100%;
   }
+  .header-cart-label {
+    display: none;
+  }
+}
+@media (max-width: 480px) {
+  .custom-title-section h2:before {
+    left: 16%;
+  }
+}
+@media (max-width: 425px) {
+  .custom-title-section h2:before {
+    left: 12%;
+  }
 }
 @media (max-width: 414px) {
   .custom-title-section h2:before {
-    width: 270px;
     left: 12%;
   }
   .custom-double-title-section h2 {
@@ -266,5 +297,21 @@ MEDIAQUERIES XS - LAYOUTS LESS THAN 768px
   }
   .footer-copy {
     padding: 1rem !important;
+  }
+  .woocommerce ul.products[class*=columns-] li.product,
+  .woocommerce-page ul.products[class*=columns-] li.product {
+    width: 100%;
+    float: none;
+    clear: both;
+    margin: 0 0 2.992em;
+  }
+}
+@media (max-width: 375px) {
+  .top-header .top-center a {
+    padding: 0 0.7rem;
+    font-size: 1.2rem;
+  }
+  .custom-title-section h2:before {
+    left: 5%;
   }
 }

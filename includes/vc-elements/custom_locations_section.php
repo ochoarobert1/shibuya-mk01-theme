@@ -34,7 +34,7 @@ function custom_locations_section_map() {
                 'value' => $locations_array,
                 'std' => ' ',
             ),
-               array(
+            array(
                 'type' => 'dropdown',
                 'class' => '',
                 'admin_label' => true,
@@ -42,7 +42,17 @@ function custom_locations_section_map() {
                 'description' => __('Seleccione el Color de Linea del texto.', 'shibuya'),
                 'param_name' => 'color_line',
                 'value' => array( 'orange', 'white' )
+            ),
+            array(
+                'type' => 'vc_link',
+                'class' => '',
+                'admin_label' => true,
+                'heading' => __('URL del Boton', 'shibuya'),
+                'param_name' => 'button_link',
+                'value' => '',
+                'description' => __('Agregar el URL de la ubicación', 'shibuya')
             )
+
         )
     );
 

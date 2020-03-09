@@ -9,6 +9,9 @@ $location_id = $atts['locations_selection'];
 
 if (isset($atts['color_line'])) { $line_color = 'white-line'; } else { $line_color = ''; }
 
+$button_link = vc_build_link( $atts['button_link'] );
+
+
 $location_post = get_post($location_id);
 
 ob_start();
@@ -34,7 +37,7 @@ ob_start();
         </div>
         <div class="custom-location-buttons col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <a href="<?php echo get_post_meta($location_id, 'sby_maps', true); ?>" class="btn btn-sm btn-location"><?php _e('Google Maps', 'shibuya'); ?></a>
-            <a href="<?php echo home_url('/menu'); ?>" class="btn btn-sm btn-location"><?php _e('Order Now', 'shibuya'); ?></a>
+            <a href="<?php echo esc_url($button_link['url']); ?>" class="btn btn-sm btn-location btn-location-order"><?php _e('Order Now', 'shibuya'); ?></a>
         </div>
         <div class="custom-location-additional col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <?php echo apply_filters('the_content', get_post_meta($location_id, 'sby_additional_info', true)); ?>

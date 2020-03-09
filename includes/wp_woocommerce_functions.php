@@ -57,7 +57,7 @@ if ( ! function_exists( 'woocommerce_template_loop_product_thumbnail' ) ) {
 
     function woocommerce_template_loop_product_thumbnail() {
         echo woocommerce_get_product_thumbnail();
-    } 
+    }
 }
 
 
@@ -81,7 +81,7 @@ if ( ! function_exists( 'woocommerce_get_product_thumbnail' ) ) {
         $output .= '<a href="'. get_permalink() .'" title="' . __('View More') . '">';
         if ( has_post_thumbnail() ) {
 
-            $output .= get_the_post_thumbnail( $post->ID, 'shop_catalog' ); 
+            $output .= get_the_post_thumbnail( $post->ID, 'shop_catalog' );
 
         } else {
 
@@ -107,18 +107,48 @@ function woocommerce_custom_image_wrapper_handler() {
         <?php do_action( 'woocommerce_after_shop_loop_item_title' ); ?>
     </div>
     <div class="buttons-container">
-        <a id="custom_ajax_add_to_cart" data-id="<?php echo get_the_ID(); ?>" data-sku="<?php echo get_post_meta(get_the_ID(), '_sku', true); ?>" class="btn btn-sm btn-product-loop"><i class="fa fa-shopping-cart"></i></a>
+        <?php $product = wc_get_product( get_the_ID() ); ?>
+        <?php $avail_activate = get_post_meta(get_the_ID(), 'activate_availability', true); ?>
+        <?php if ($avail_activate == 'yes') { ?>
+        <?php $availability_start = get_post_meta(get_the_ID(), 'hour_start', true); ?>
+        <?php $availability_end = get_post_meta(get_the_ID(), 'hour_end', true); ?>
+        <?php $time = new DateTime('now', new DateTimeZone('-4')); ?>
+        <?php $now = new DateTime(); ?>
+        <?php $begin = new DateTime($availability_start); ?>
+        <?php $end = new DateTime($availability_end); ?>
+        <?php if ($time->format("Y-m-d H:i") >= $begin->format("Y-m-d H:i") && $time->format("Y-m-d H:i") <= $end->format("Y-m-d H:i")) { ?>
+        <?php $disable_ajax_time = false; ?>
+        <?php } else { ?>
+        <?php $disable_ajax_time = true; ?>
+        <?php } ?>
+        <?php if( $product->get_stock_quantity() > 0 ) { ?>
+        <?php $disable_ajax = false; ?>
+        <?php } else { ?>
+        <?php $disable_ajax = true; ?>
+        <?php } ?>
+        <?php } ?>
+
+        <?php $comb_limit_act = get_post_meta(get_the_ID(), 'activate_limit', true); ?>
+        <?php if ($comb_limit_act == 'yes') { ?>
+        <?php $disable_ajax = true; ?>
+        <?php } else { ?>
+        <?php $disable_ajax = false; ?>
+        <?php } ?>
+
+
+        <a id="custom_ajax_add_to_cart" data-url="<?php echo the_permalink(); ?>" data-id="<?php echo get_the_ID(); ?>" data-sku="<?php echo get_post_meta(get_the_ID(), '_sku', true); ?>" class="btn btn-sm btn-product-loop <?php if ($disable_ajax == true) { echo 'disabled'; } ?> <?php if ($disable_ajax_time == true) { echo 'disabled'; } ?>"><i class="fa fa-shopping-cart"></i></a>
         <a data-productid="<?php echo get_the_ID(); ?>" class="btn btn-sm btn-product-loop btn-quickview"><i class="fa fa-search"></i></a>
     </div>
     <div class="response-ajax-container response-ajax-container-<?php echo get_the_ID(); ?>"></div>
 
 </div>
-<?php 
+<?php
     /* GET OB_CACHE CONTENT */
     $content = ob_get_clean();
     /* RETURN SHORTCODE */
     return $content;
 }
+
 /* WOOCOMMERCE - CUSTOM CONTENT PRODUCT - SHOP - END */
 
 /* WOOCOMMERCE - CUSTOM ADD TO CART AJAX HANDLER - START */
@@ -161,6 +191,15 @@ function woocommerce_ajax_add_to_cart() {
 
 remove_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20);
 
+add_filter( 'woocommerce_pagination_args', 	'rocket_woo_pagination' );
+function rocket_woo_pagination( $args ) {
+
+    $args['prev_text'] = '<i class="fa fa-angle-left"></i>';
+    $args['next_text'] = '<i class="fa fa-angle-right"></i>';
+
+    return $args;
+}
+
 /* WOOCOMMERCE - ARCHIVE PRODUCT - END */
 
 
@@ -172,14 +211,14 @@ add_action('woocommerce_single_product_summary', 'custom_woocommerce_single_cate
 
 function custom_woocommerce_single_categories() {
     $terms = get_the_terms(get_the_ID(), 'product_cat');
-    if ( $terms && ! is_wp_error( $terms ) ) : 
+    if ( $terms && ! is_wp_error( $terms ) ) :
 ?>
 <div class="custom-single-category-container">
     <?php foreach ( $terms as $term ) { ?>
     <a href="<?php echo get_term_link($term); ?>"><?php echo $term->name; ?></a>
     <?php } ?>
 </div>
-<?php endif; 
+<?php endif;
 
 }
 
@@ -191,7 +230,7 @@ function woocommerce_custom_cart_widget() {
     $cart_quantity = $woocommerce->cart->cart_contents_count;
     $cart_amount = $woocommerce->cart->get_cart_total();
 
-    return '<i class="fa fa-shopping-bag"></i><span class="header-cart-label">' . __('Your Cart:', 'shibuya') . '</span> ' . sprintf( _n( '%s item', '%s items', $cart_quantity, 'shibuya' ), $cart_quantity ) . ' - ' . $cart_amount;
+    return '<i class="fa fa-shopping-bag"></i><div class="header-cart-label">' . __('Your Cart:', 'shibuya') . '</div> ' . sprintf( _n( '%s item', '%s items', $cart_quantity, 'shibuya' ), $cart_quantity ) . ' - ' . $cart_amount;
 }
 
 
@@ -201,11 +240,43 @@ function shibuya_add_to_cart_fragment( $fragments ) {
 
     global $woocommerce;
 
-    $fragments['.top-header-cart-container'] = '<a href="' . wc_get_cart_url() . '" class="top-header-cart-container"><i class="fa fa-shopping-bag"></i><span class="header-cart-label">' . __('Your Cart:', 'shibuya') . '<span> ' . sprintf( _n( '%s item', '%s items', $woocommerce->cart->cart_contents_count, 'shibuya' ), $woocommerce->cart->cart_contents_count ) . ' - ' . $woocommerce->cart->get_cart_total();
+    $fragments['.top-header-cart-container'] = '<a href="' . wc_get_cart_url() . '" class="top-header-cart-container"><i class="fa fa-shopping-bag"></i><div class="header-cart-label">' . __('Your Cart:', 'shibuya') . '</div> ' . sprintf( _n( '%s item', '%s items', $woocommerce->cart->cart_contents_count, 'shibuya' ), $woocommerce->cart->cart_contents_count ) . ' - ' . $woocommerce->cart->get_cart_total();
     return $fragments;
 
 }
 /* WOOCOMMERCE - CART WIDGET - END */
+add_filter( 'woocommerce_before_calculate_totals', 'custom_cart_items_prices', 10, 1 );
+function custom_cart_items_prices( $cart ) {
+
+    if ( is_admin() && ! defined( 'DOING_AJAX' ) )
+        return;
+
+    if ( did_action( 'woocommerce_before_calculate_totals' ) >= 2 )
+        return;
+
+
+    foreach ( $cart->get_cart() as $cart_item ) {
+        $product = $cart_item['data'];
+        $product_id = $product->get_id();
+
+        if( has_term( 'poke-bowls', 'product_cat', $product_id ) ) {
+            $contador = 0;
+            $addons_array = $cart_item['addons'];
+            foreach ($addons_array as $item) {
+                if ($item['name'] == 'Toppings') {
+                    $contador = $contador + 1;
+                }
+
+            }
+            if ($contador > 4) {
+                $newaddons = $contador - 4;
+                $price = $cart_item['data']->get_price();
+                $new_price = $price + $newaddons;
+                $cart_item['data']->set_price( $new_price );
+            }
+        }
+    }
+}
 
 
 /*** Add a text field to each cart item */
@@ -221,49 +292,7 @@ function prefix_after_cart_item_name( $cart_item, $cart_item_key ) {
         $cart_item_key,
         $notes
     );
-    /*
-    $product = $cart_item['data'];
-    $product_id = $product->get_id();
 
-    if ( has_term( 'classic-rolls', 'product_cat', $product_id ) ) {
-        $cat_check = true;
-
-    }
-    if ( has_term( 'signature-rolls', 'product_cat', $product_id ) ) {
-        $cat_check = true;
-
-    }
-    if ( has_term( 'healthy-rolls', 'product_cat', $product_id ) ) {
-        $cat_check = true;
-
-    }
-    if ( has_term( 'chef-rolls', 'product_cat', $product_id ) ) {
-        $cat_check = true;
-
-    }
-    // if a product in the cart is in our category, do something
-    if ( $cat_check ) {
-        if ($temp == '') {
-            printf(
-                '<div><label for="add_tempurize_%s"><input type="checkbox" id="add_tempurize_%s" class="%s" id="card_tempurize_%s" data-card-id="%s"/>Tempurize Roll (+ $1.00)</label></div>',
-                'prefix-cart-tempurize',
-                $cart_item_key,
-                $cart_item_key,
-                $cart_item_key,
-                $cart_item_key
-            );
-        } else {
-            printf(
-                '<div><label for="add_tempurize_%s"><input type="checkbox" checked id="add_tempurize_%s" class="%s" id="card_tempurize_%s" data-card-id="%s"/>Tempurize Roll (+ $1.00)</label></div>',
-                $cart_item_key,
-                $cart_item_key,
-                'prefix-cart-tempurize',
-                $cart_item_key,
-                $cart_item_key
-            );  
-        }
-    }
-    */
 }
 add_action( 'woocommerce_after_cart_item_name', 'prefix_after_cart_item_name', 10, 2 );
 
@@ -336,49 +365,86 @@ function wcpp_custom_style() {
 add_action( 'admin_head', 'wcpp_custom_style' );
 
 function wk_custom_product_tab( $default_tabs ) {
-    $default_tabs['custom_tab'] = array(
-        'label'   =>  __( 'Custom Tab', 'domain' ),
-        'target'  =>  'wk_custom_tab_data',
-        'priority' => 60,
+    $default_tabs['availability'] = array(
+        'label'   =>  __( 'Availability', 'domain' ),
+        'target'  =>  'sy_availability_data',
+        'priority' => 50,
         'class'   => array( 'show_if_simple', 'show_if_variable'  ),
     );
     return $default_tabs;
 }
 
-add_action( 'woocommerce_product_data_panels', 'wk_custom_tab_data' );
+add_action( 'woocommerce_product_options_general_product_data', 'sy_combination_limits' );
 
-function wk_custom_tab_data() {
+function sy_combination_limits() {
     ob_start();
 ?>
-<div id="wk_custom_tab_data" class="panel woocommerce_options_panel hidden">
-    <div class="options_group">
-        <?php
+
+<div class="options_group">
+    <?php
     woocommerce_wp_checkbox(
         array(
-            'id'        => 'include_giftwrap_option',
-            'label'     => __( 'Include giftwrap option', 'tpwcp' ),
-            'desc_tip'  => __( 'Select this option to show giftwrapping options for this product', 'tpwcp' )
-        )
-    );
-    woocommerce_wp_checkbox(
-        array(
-            'id'        => 'include_custom_message',
-            'label'     => __( 'Include custom message', 'tpwcp' ),
-            'desc_tip'  => __( 'Select this option to allow customers to include a custom message', 'tpwcp' )
+            'id'        => 'activate_limit',
+            'label'     => __( 'Activate limit for Combinations', 'tpwcp' ),
+            'desc_tip'  => __( 'Select this option to set a limit for Combinations', 'tpwcp' )
         )
     );
     woocommerce_wp_text_input(
         array(
-            'id'        => 'giftwrap_cost',
-            'label'     => __( 'Giftwrap cost', 'tpwcp' ),
+            'id'        => 'limit_combinations',
+            'label'     => __( 'Set a limit for combinations for this Product', 'tpwcp' ),
             'type'      => 'number',
-            'desc_tip'  => __( 'Enter the cost of giftwrapping this product', 'tpwcp' )
+            'desc_tip'  => __( 'Set a limit for combinations for this Product', 'tpwcp' )
         )
     );
+
+
+    ?>
+</div>
+
+<?php
+    $content = ob_get_clean();
+    echo $content;
+}
+
+
+
+add_action( 'woocommerce_product_data_panels', 'sy_availability_data' );
+
+function sy_availability_data() {
+    ob_start();
+?>
+<div id="sy_availability_data" class="panel woocommerce_options_panel hidden">
+    <div class="options_group">
+        <?php
+    woocommerce_wp_checkbox(
+        array(
+            'id'        => 'activate_availability',
+            'label'     => __( 'Activate availability by hours (Only works with add-ons)', 'tpwcp' ),
+            'desc_tip'  => __( 'Select this option to set hours of availability or this product', 'tpwcp' )
+        )
+    );
+    woocommerce_wp_text_input(
+        array(
+            'id'        => 'hour_start',
+            'label'     => __( 'Start Hour for Product', 'tpwcp' ),
+            'type'      => 'time',
+            'desc_tip'  => __( 'Select the starting hour for availability', 'tpwcp' )
+        )
+    );
+    woocommerce_wp_text_input(
+        array(
+            'id'        => 'hour_end',
+            'label'     => __( 'End Hour for product', 'tpwcp' ),
+            'type'      => 'time',
+            'desc_tip'  => __( 'Select the ending hour for availability', 'tpwcp' )
+        )
+    );
+
         ?>
     </div>
 </div>
-<?php 
+<?php
     $content = ob_get_clean();
     echo $content;
 }
@@ -389,19 +455,80 @@ function shibuya_product_custom_save_fields( $post_id ) {
 
     $product = wc_get_product( $post_id );
 
-    // Save the include_giftwrap_option setting
-    $include_giftwrap_option = isset( $_POST['include_giftwrap_option'] ) ? 'yes' : 'no';
-    // update_post_meta( $post_id, 'include_giftwrap_option', sanitize_text_field( $include_giftwrap_option ) );
-    $product->update_meta_data( 'include_giftwrap_option', sanitize_text_field( $include_giftwrap_option ) );
+    /* ADDONS LIMIT */
+    $activate_limit = isset( $_POST['activate_limit'] ) ? 'yes' : 'no';
+    $product->update_meta_data( 'activate_limit', sanitize_text_field( $activate_limit ) );
 
-    // Save the include_giftwrap_option setting
-    $include_custom_message = isset( $_POST['include_custom_message'] ) ? 'yes' : 'no';
-    $product->update_meta_data( 'include_custom_message', sanitize_text_field( $include_custom_message ) );
+    if (isset( $_POST['limit_combinations'] )) {
+        $limit_combinations = $_POST['limit_combinations'];
+        $product->update_meta_data( 'limit_combinations', $limit_combinations);
+    }
 
-    // Save the giftwrap_cost setting
-    $giftwrap_cost = isset( $_POST['giftwrap_cost'] ) ? $_POST['giftwrap_cost'] : '';
-    $product->update_meta_data( 'giftwrap_cost', sanitize_text_field( $giftwrap_cost ) );
+    /* AVAILABILITY */
+    $activate_availability = isset( $_POST['activate_availability'] ) ? 'yes' : 'no';
+    $product->update_meta_data( 'activate_availability', sanitize_text_field( $activate_availability ) );
+
+    if (isset( $_POST['hour_start'] )) {
+        $availability_start = $_POST['hour_start'];
+        $product->update_meta_data( 'hour_start', $availability_start);
+
+    }
+
+    if (isset( $_POST['hour_end'] )) {
+        $availability_end = $_POST['hour_end'];
+        $product->update_meta_data( 'hour_end', $availability_end);
+    }
+
 
     $product->save();
 
+}
+
+/**
+ * Add the field to the checkout
+ */
+add_action( 'woocommerce_after_order_notes', 'my_custom_checkout_field' );
+
+function my_custom_checkout_field( $checkout ) {
+
+    woocommerce_form_field( 'time_takeout', array(
+        'type'          => 'time',
+        'class'         => array('my-field-class form-row-wide'),
+        'label'         => __('Time for takeout [Elegible only for Pickup]'),
+        'placeholder'   => __('Enter an hour where you can come for your order'),
+    ), $checkout->get_value( 'time_takeout' ));
+}
+
+/**
+ * Process the checkout
+ */
+add_action('woocommerce_checkout_process', 'my_custom_checkout_field_process');
+
+function my_custom_checkout_field_process() {
+    // Check if set, if its not set add an error.
+    $shipping_custom = $_POST['shipping_method'];
+    $shipping_selected = $shipping_custom[0];
+    if (( ! $_POST['time_takeout'] && (strpos($shipping_selected, 'pickup') !== false) )) {
+        wc_add_notice( __( '<strong>Error:</strong> Pickup is Selected, we will need a time for takeout.' ), 'error' );
+    }
+}
+
+/**
+ * Update the order meta with field value
+ */
+add_action( 'woocommerce_checkout_update_order_meta', 'my_custom_checkout_field_update_order_meta' );
+
+function my_custom_checkout_field_update_order_meta( $order_id ) {
+    if ( ! empty( $_POST['time_takeout'] ) ) {
+        update_post_meta( $order_id, 'time_takeout', sanitize_text_field( $_POST['time_takeout'] ) );
+    }
+}
+
+/**
+ * Display field value on the order edit page
+ */
+add_action( 'woocommerce_admin_order_data_after_shipping_address', 'my_custom_checkout_field_display_admin_order_meta', 10, 1 );
+
+function my_custom_checkout_field_display_admin_order_meta($order){
+    echo '<p><strong>'.__('Time for Takeout').':</strong> ' . get_post_meta( $order->id, 'time_takeout', true ) . '</p>';
 }
