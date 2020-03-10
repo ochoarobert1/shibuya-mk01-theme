@@ -28,7 +28,7 @@ get_header( 'shop' );
  */
 do_action( 'woocommerce_before_main_content' );
 
-$shop_id = get_option( 'woocommerce_shop_page_id' ); 
+$shop_id = get_option( 'woocommerce_shop_page_id' );
 
 if (is_tax('product_cat')) {
     $image_id = get_term_meta(get_queried_object_id(), 'thumbnail_id', true);
@@ -47,11 +47,11 @@ $bg_hero = wp_get_attachment_image_src($image_id, 'full', false);
 
         <?php
         /**
-	 * Hook: woocommerce_archive_description.
-	 *
-	 * @hooked woocommerce_taxonomy_archive_description - 10
-	 * @hooked woocommerce_product_archive_description - 10
-	 */
+     * Hook: woocommerce_archive_description.
+     *
+     * @hooked woocommerce_taxonomy_archive_description - 10
+     * @hooked woocommerce_product_archive_description - 10
+     */
         do_action( 'woocommerce_archive_description' );
         ?>
     </header>
@@ -61,8 +61,9 @@ $bg_hero = wp_get_attachment_image_src($image_id, 'full', false);
         <div class="main-woocommerce-custom-container col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 
             <div class="row">
-                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
-                    <?php 
+                <div class="woocommerce-custom-sidebar col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+                    <button class="btn btn-md btn-show-menu d-xl-none d-lg-none d-md-none d-sm-block d-block"><?php _e('Show Menu', 'shibuya'); ?></button>
+                    <?php
                     /**
  * Hook: woocommerce_sidebar.
  *
@@ -77,12 +78,12 @@ $bg_hero = wp_get_attachment_image_src($image_id, 'full', false);
                     if ( woocommerce_product_loop() ) {
 
                         /**
-	 * Hook: woocommerce_before_shop_loop.
-	 *
-	 * @hooked woocommerce_output_all_notices - 10
-	 * @hooked woocommerce_result_count - 20
-	 * @hooked woocommerce_catalog_ordering - 30
-	 */
+     * Hook: woocommerce_before_shop_loop.
+     *
+     * @hooked woocommerce_output_all_notices - 10
+     * @hooked woocommerce_result_count - 20
+     * @hooked woocommerce_catalog_ordering - 30
+     */
                         do_action( 'woocommerce_before_shop_loop' );
 
                         woocommerce_product_loop_start();
@@ -92,8 +93,8 @@ $bg_hero = wp_get_attachment_image_src($image_id, 'full', false);
                                 the_post();
 
                                 /**
-			 * Hook: woocommerce_shop_loop.
-			 */
+             * Hook: woocommerce_shop_loop.
+             */
                                 do_action( 'woocommerce_shop_loop' );
 
                                 wc_get_template_part( 'content', 'product' );
@@ -103,17 +104,17 @@ $bg_hero = wp_get_attachment_image_src($image_id, 'full', false);
                         woocommerce_product_loop_end();
 
                         /**
-	 * Hook: woocommerce_after_shop_loop.
-	 *
-	 * @hooked woocommerce_pagination - 10
-	 */
+     * Hook: woocommerce_after_shop_loop.
+     *
+     * @hooked woocommerce_pagination - 10
+     */
                         do_action( 'woocommerce_after_shop_loop' );
                     } else {
                         /**
-	 * Hook: woocommerce_no_products_found.
-	 *
-	 * @hooked wc_no_products_found - 10
-	 */
+     * Hook: woocommerce_no_products_found.
+     *
+     * @hooked wc_no_products_found - 10
+     */
                         do_action( 'woocommerce_no_products_found' );
                     }
 
@@ -130,5 +131,5 @@ $bg_hero = wp_get_attachment_image_src($image_id, 'full', false);
         </div>
     </div>
 </div>
-<?php 
+<?php
 get_footer( 'shop' );

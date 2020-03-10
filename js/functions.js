@@ -38,6 +38,17 @@ function reCAPTCHA_execute() {
 
 jQuery(document).ready(function ($) {
     "use strict";
+
+    jQuery('.btn-show-menu').on('click', function () {
+        jQuery('.product-sidebar').toggleClass('product-sidebar-show');
+        if (jQuery('.product-sidebar').hasClass('product-sidebar-show')) {
+            jQuery(this).html('Hide Menu');
+        } else {
+            jQuery(this).html('Show Menu');
+        }
+
+    });
+
     grecaptcha.ready(function () {
         reCAPTCHA_execute();
         setInterval(reCAPTCHA_execute, 60000);

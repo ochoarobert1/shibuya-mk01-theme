@@ -219,10 +219,10 @@ function ajax_product_quickview_handler() {
 <?php } ?>
 <div class="container-fluid">
     <div class="row">
-        <div class="product-quickview-image col-6">
+        <div class="product-quickview-image col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
             <?php echo get_the_post_thumbnail($product_post, 'full', array('class' => 'img-fluid' )); ?>
         </div>
-        <div class="product-quickview-content col-6">
+        <div class="product-quickview-content col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
             <h2><?php echo $product_post->post_title; ?></h2>
             <div class="product-quickview-price">
                 <?php echo $product->get_price_html(); ?>
@@ -230,7 +230,7 @@ function ajax_product_quickview_handler() {
             <div class="product-quickview-info">
                 <?php echo apply_filters('the_content', $product->description); ?>
             </div>
-            <div class="product-quickview-info">
+            <div class="product-quickview-add-button">
                 <?php if ( $product && $product->is_type( 'simple' ) && $product->is_purchasable() && $product->is_in_stock() && ! $product->is_sold_individually() ) { ?>
                 <?php $avail_activate = get_post_meta($product_id, 'activate_availability', true); ?>
                 <?php if ($avail_activate == 'yes') { ?>
@@ -254,7 +254,7 @@ function ajax_product_quickview_handler() {
                 <?php } else { ?>
                 <?php $html = '<form action="' . esc_url( $product->add_to_cart_url() ) . '" class="cart" method="post" enctype="multipart/form-data">'; ?>
                 <?php $html .= woocommerce_quantity_input( array(), $product, false );?>
-                <?php $html .= '<button type="submit" class="button alt btn btn-sm btn-modal">' . esc_html( $product->add_to_cart_text() ) . '</button>'; ?>
+                <?php $html .= '<button type="submit" class="button alt btn btn-sm btn-add-cart">' . esc_html( $product->add_to_cart_text() ) . '</button>'; ?>
                 <?php $html .= '</form>'; ?>
                 <?php } ?>
                 <?php } ?>

@@ -532,3 +532,41 @@ add_action( 'woocommerce_admin_order_data_after_shipping_address', 'my_custom_ch
 function my_custom_checkout_field_display_admin_order_meta($order){
     echo '<p><strong>'.__('Time for Takeout').':</strong> ' . get_post_meta( $order->id, 'time_takeout', true ) . '</p>';
 }
+
+
+function disable_shipping_calc_on_cart( $show_shipping ) {
+    if( is_cart() ) {
+        return false;
+    }
+
+    return $show_shipping;
+}
+add_filter( 'woocommerce_cart_ready_to_calc_shipping', 'disable_shipping_calc_on_cart', 99 );
+
+add_action( 'woocommerce_cart_totals_before_order_total', 'display_cart_volume_total', 20 );
+function display_cart_volume_total() {
+//   $delivery_zones = WC_Shipping_Zones::get_zones();
+//
+//foreach ((array) $delivery_zones as $key => $the_zone ) {
+//
+//  $dev_zones[] = $the_zone['shipping_methods'];
+//
+//}
+//foreach ($dev_zones as $item => $value) {
+//    print_r($value);
+//    echo '<br></br>';
+//}
+?>
+
+<tr class="cart-total-custom-shipping">
+    <th><?php _e( "Shipping", "woocommerce" ); ?></th>
+    <td data-title="Shipping" class="cart-total-custom-shipping-methods">
+        <label for="shipping_custom1"><input type="radio" name="shipping_custom_method_false" id="shipping_custom1" /> $ 0.00 | Pickup</label>
+        <small>We will ask for the time that you can come and get your order.</small>
+        <label for="shipping_custom2"><input type="radio" name="shipping_custom_method_false" id="shipping_custom2" /> $ 4.00 | Delivery</label>
+        <small>We will need to validate your address in order to know if you are elegible for delivery.</small>
+        <p>(These options will be calculated on Checkout.)</p>
+    </td>
+</tr>
+<?php
+}
