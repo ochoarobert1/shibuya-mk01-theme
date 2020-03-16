@@ -1,4 +1,4 @@
-<?php if (is_front_page()) { ?>
+<?php if ((is_front_page()) || (is_shop())) { ?>
 <a href="<?php echo get_permalink( wc_get_page_id( 'shop' ) ); ?>" class="btn btn-md btn-floating"><?php _e('Order Now!', 'shibuya'); ?></a>
 <?php } else { ?>
 <a href="<?php echo get_permalink( wc_get_page_id( 'shop' ) ); ?>" class="btn btn-md btn-floating"><?php _e('Back to Menu', 'shibuya'); ?></a>

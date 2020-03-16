@@ -77,7 +77,12 @@ $bg_hero = wp_get_attachment_image_src($image_id, 'full', false);
         </div>
     </div>
 </div>
-<div class="main-woocommerce-title-container col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="background: url(<?php echo $bg_hero[0]; ?>);">
+<?php if (is_shop()) { ?>
+<?php $responsive_helper = 'd-xl-block d-lg-block d-md-block d-sm-none d-none'; ?>
+<?php } else { ?>
+<?php $responsive_helper = ''; ?>
+<?php } ?>
+<div class="main-woocommerce-title-container col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 <?php echo $responsive_helper; ?>" style="background: url(<?php echo $bg_hero[0]; ?>);">
     <header class="woocommerce-products-header">
         <?php if ( apply_filters( 'woocommerce_show_page_title', true ) ) : ?>
         <h1 class="woocommerce-products-header__title page-title"><?php woocommerce_page_title(); ?></h1>
@@ -94,6 +99,7 @@ $bg_hero = wp_get_attachment_image_src($image_id, 'full', false);
         ?>
     </header>
 </div>
+
 <div class="container">
     <div class="row">
         <div class="main-woocommerce-custom-container col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">

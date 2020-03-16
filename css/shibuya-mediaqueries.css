@@ -230,6 +230,13 @@ MEDIAQUERIES SM - LAYOUTS BIGGER THAN 768px
 MEDIAQUERIES XS - LAYOUTS LESS THAN 768px
 -------------------------------------------------------------- */
 @media (max-width: 600px) {
+  .img-logo {
+    max-height: 100px;
+  }
+  .main-woocommerce-title-container {
+    padding: 4.5rem;
+    margin-bottom: 1rem;
+  }
   .custom-maps-section .custom-map-info .custom-map-info-item:nth-child(1):after {
     display: none;
   }

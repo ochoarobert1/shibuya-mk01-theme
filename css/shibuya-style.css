@@ -1724,7 +1724,7 @@ input::-webkit-outer-spin-button input::-webkit-inner-spin-button {
   text-align: center;
 }
 .custom-accordion .card .card-header {
-  background: #FF9501;
+  background: #B27900;
   padding: 0.5rem;
 }
 .custom-accordion .card .card-header:hover {
@@ -1772,5 +1772,5 @@ input::-webkit-outer-spin-button input::-webkit-inner-spin-button {
   color: #B27900;
 }
 .custom-category-mobile-container ul .active a {
-  color: #FF9501 !important;
+  color: #B27900 !important;
 }
