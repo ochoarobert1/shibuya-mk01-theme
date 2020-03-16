@@ -545,17 +545,6 @@ add_filter( 'woocommerce_cart_ready_to_calc_shipping', 'disable_shipping_calc_on
 
 add_action( 'woocommerce_cart_totals_before_order_total', 'display_cart_volume_total', 20 );
 function display_cart_volume_total() {
-//   $delivery_zones = WC_Shipping_Zones::get_zones();
-//
-//foreach ((array) $delivery_zones as $key => $the_zone ) {
-//
-//  $dev_zones[] = $the_zone['shipping_methods'];
-//
-//}
-//foreach ($dev_zones as $item => $value) {
-//    print_r($value);
-//    echo '<br></br>';
-//}
 ?>
 
 <tr class="cart-total-custom-shipping">

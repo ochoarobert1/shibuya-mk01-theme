@@ -39,6 +39,44 @@ if (is_tax('product_cat')) {
 $bg_hero = wp_get_attachment_image_src($image_id, 'full', false);
 
 ?>
+<?php if (is_shop()) { $collapsed = true; } else { $collapsed = false; } ?>
+<div class="accordion custom-accordion d-xl-none d-lg-none d-md-none d-sm-block d-block" id="accordionMobile">
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h2 class="mb-0 <?php if ($collapsed == false) { echo 'collapsed'; } ?>" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <button class="btn btn-link" type="button">
+                    <?php _e('Menu', 'shibuya'); ?>
+
+                    <div class="custom-caret"><i class="fa fa-chevron-down"></i></div>
+                </button>
+            </h2>
+        </div>
+        <div id="collapseOne" class="collapse <?php if ($collapsed == true) { echo 'show'; } ?>" aria-labelledby="headingOne" data-parent="#accordionMobile">
+            <div class="card-body">
+                <div class="custom-category-mobile-container">
+                    <?php $product_cat = get_terms(array('taxonomy' => 'product_cat', 'hide_empty' => false, 'order' => 'ASC', 'orderby' => 'menu_order')); ?>
+                    <?php if (!empty($product_cat)) { ?>
+                    <ul>
+                        <?php foreach ($product_cat as $product_item) { ?>
+                        <?php if ($product_item->name != 'Products') { ?>
+                        <?php if ($product_item->term_id == get_queried_object_id()) { ?>
+                        <?php $active = 'active'; ?>
+                        <?php } else { ?>
+                        <?php $active = ''; ?>
+                        <?php } ?>
+                        <li class="<?php echo $active; ?>">
+                            <a href="<?php echo get_term_link($product_item); ?>"><?php echo $product_item->name; ?></a>
+                        </li>
+                        <?php } ?>
+                        <?php } ?>
+                    </ul>
+                    <?php } ?>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="main-woocommerce-title-container col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="background: url(<?php echo $bg_hero[0]; ?>);">
     <header class="woocommerce-products-header">
         <?php if ( apply_filters( 'woocommerce_show_page_title', true ) ) : ?>
@@ -62,7 +100,7 @@ $bg_hero = wp_get_attachment_image_src($image_id, 'full', false);
 
             <div class="row">
                 <div class="woocommerce-custom-sidebar col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
-                    <button class="btn btn-md btn-show-menu d-xl-none d-lg-none d-md-none d-sm-block d-block"><?php _e('Show Menu', 'shibuya'); ?></button>
+
                     <?php
                     /**
  * Hook: woocommerce_sidebar.

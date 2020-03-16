@@ -1719,3 +1719,58 @@ input::-webkit-outer-spin-button input::-webkit-inner-spin-button {
   background: #444;
   color: white;
 }
+.custom-accordion .card {
+  background-color: #000;
+  text-align: center;
+}
+.custom-accordion .card .card-header {
+  background: #FF9501;
+  padding: 0.5rem;
+}
+.custom-accordion .card .card-header:hover {
+  background: #B27900;
+}
+.custom-accordion .card .card-header .btn {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #ffffff;
+  width: 100%;
+  display: block;
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+.custom-accordion .card .card-header .btn:hover {
+  text-decoration: none;
+}
+.custom-accordion .card .card-header .btn .custom-caret {
+  display: inline-block;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+.custom-accordion .collapsed .custom-caret {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.custom-category-mobile-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.custom-category-mobile-container ul li a {
+  color: #ffffff;
+  padding: 0.6rem !important;
+  display: block;
+  font-size: 1.3rem;
+}
+.custom-category-mobile-container ul li a:hover {
+  color: #B27900;
+}
+.custom-category-mobile-container ul .active a {
+  color: #FF9501 !important;
+}

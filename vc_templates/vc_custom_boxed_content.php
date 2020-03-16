@@ -17,7 +17,6 @@ $button_link = vc_build_link( $atts['button_link'] );
         <h2><?php echo $atts['title']; ?></h2>
         <h3><?php echo $content; ?></h3>
         <h5><?php echo $atts['third']; ?></h5>
-        <a href="<?php echo esc_url($button_link['url']); ?>" title="<?php echo esc_attr($button_link['title']); ?>" class="btn btn-sm btn-boxed" style="background-color: <?php echo $atts['button_color']; ?>;"><?php echo $atts['button_text']; ?></a>
     </div>
 </div>
 <?php
