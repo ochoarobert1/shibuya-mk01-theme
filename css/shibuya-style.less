@@ -1497,7 +1497,39 @@ a {
                 height: 1px;
                 z-index: -1;
             }
+        }
 
+
+        & h2 {
+            position: relative;
+            font-size: 2.1rem;
+            display: inline-block;
+            margin: 0;
+            text-transform: uppercase;
+            font-weight: 800;
+            text-shadow: 0 0 16px black;
+
+            &:before {
+                content: '';
+                background: url(../images/lineaizq.jpg);
+                position: absolute;
+                top: 20px;
+                left: -200px;
+                width: 212px;
+                height: 1px;
+                z-index: -1;
+            }
+
+            &:after {
+                content: '';
+                background: url(../images/lineader.jpg);
+                position: absolute;
+                top: 20px;
+                right: -200px;
+                width: 212px;
+                height: 1px;
+                z-index: -1;
+            }
         }
     }
 }
@@ -2045,5 +2077,37 @@ input {
         & .active a {
             color: @orange  !important;
         }
+    }
+}
+
+.tip_form_class select {
+    background: #181818;
+    color: white;
+    padding: 0.4rem;
+}
+
+.tip_custom_hidden {
+    display: none;
+}
+
+.btn-gift {
+    color: @white;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 1px solid @orange;
+    padding: 0.5rem 1.5rem;
+    padding-left: .5rem;
+    border-radius: 10px;
+    vertical-align: middle;
+    .display(inline-flex);
+    align-items: center;
+
+    &:hover {
+        background: @black;
+        color: @white;
+    }
+
+    & img {
+        margin-right: 10px;
     }
 }

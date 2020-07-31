@@ -134,6 +134,11 @@ function shibuya_load_js() {
         wp_register_script('recaptcha-js', 'https://www.google.com/recaptcha/api.js?render=' . $google_settings['google_api'], array('jquery'), '3.0.0', true);
         wp_enqueue_script('recaptcha-js');
 
+        if (is_page('checkout')) {
+            wp_register_script('jquerytime-js', 'https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js', array('jquery'), '1.3.5', true);
+            wp_enqueue_script('jquerytime-js');
+        }
+
         /*- MAIN FUNCTIONS -*/
         wp_register_script('main-functions', get_template_directory_uri() . '/js/functions.js', array('jquery', 'recaptcha-js'), $version_remove, true);
         wp_enqueue_script('main-functions');

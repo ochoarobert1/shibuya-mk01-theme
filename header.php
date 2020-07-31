@@ -46,8 +46,35 @@
     <!--[if IE]> <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script> <![endif]-->
     <!--[if IE]> <script type="text/javascript" src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script> <![endif]-->
     <!--[if IE]> <link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/favicon.ico" /> <![endif]-->
-    <?php get_template_part('includes/fb-script'); ?>
-    <?php get_template_part('includes/ga-script'); ?>
+    <!-- Facebook Pixel Code -->
+    <script>
+        ! function(f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function() {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '472397159987580');
+        fbq('track', 'PageView');
+
+    </script>
+    <noscript>
+        <img height="1" width="1" src="https://www.facebook.com/tr?id=472397159987580&ev=PageView
+                                           &noscript=1" />
+    </noscript>
+    <!-- End Facebook Pixel Code -->
 </head>
 
 <body class="the-main-body <?php echo join(' ', get_body_class()); ?>" itemscope itemtype="http://schema.org/WebPage">
@@ -109,8 +136,10 @@
             </div>
             <div class="the-header col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 d-xl-block d-lg-block d-md-none d-sm-none d-none">
                 <div class="container">
-                    <div class="row">
-                        <div class="logo-container col-12">
+                    <div class="row align-items-center">
+                        <div class="logo-spacer col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 d-xl-block d-lg-block d-md-block d-sm-none d-none"></div>
+
+                        <div class="logo-container col-xl-6 col-lg-6 col-md-6 col-md-12 col-12">
                             <a href="<?php echo home_url('/');?>" title="<?php echo get_bloginfo('name'); ?>">
                                 <?php ?> <?php $custom_logo_id = get_theme_mod( 'custom_logo' ); ?>
                                 <?php $image = wp_get_attachment_image_src( $custom_logo_id , 'logo' ); ?>
@@ -118,6 +147,10 @@
                                 <img src="<?php echo $image[0];?>" alt="<?php echo get_bloginfo('name'); ?>" class="img-fluid img-logo" />
                                 <?php } ?>
                             </a>
+                        </div>
+                        <div class="logo-spacer col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+                            <?php $gift_options = get_option('sy_giftcard_section'); ?>
+                            <a href="<?php echo $gift_options['giftcard_link']; ?>" target="_blank" title="<?php _e('Click here to adquire your Gift Cards', 'shibuya'); ?>" class="btn-gift"><img src="<?php echo get_template_directory_uri(); ?>/images/logo-dorado-small.png" alt="<?php _e('Click here to adquire your Gift Cards', 'shibuya'); ?>" class="img-fluid" /><?php _e('Shop Gifts Cards', 'shibuya'); ?></a>
                         </div>
                         <div class="navbar-container col-12">
                             <nav class="navbar navbar-expand-md navbar-light" role="navigation">
@@ -171,6 +204,10 @@
                             'container'         => 'div'
                         ) );
                         ?>
+                    <div class="giftcard-mobile">
+                        <?php $gift_options = get_option('sy_giftcard_section'); ?>
+                        <a href="<?php echo $gift_options['giftcard_link']; ?>" target="_blank" title="<?php _e('Click here to adquire your Gift Cards', 'shibuya'); ?>" class="btn-gift"><img src="<?php echo get_template_directory_uri(); ?>/images/logo-dorado-small.png" alt="<?php _e('Click here to adquire your Gift Cards', 'shibuya'); ?>" class="img-fluid" /><?php _e('Shop Gifts Cards', 'shibuya'); ?></a>
+                    </div>
                 </div>
             </div>
         </div>

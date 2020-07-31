@@ -5,7 +5,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /* GET ATTS FOR SHORTCODE  */
-$text_alignment = $atts['text_alignment'];
+if (isset($atts['text_alignment'])) {
+    $text_alignment = $atts['text_alignment'];
+} else {
+    $text_alignment = '';
+}
 ob_start();
 /* SHORTCODE STRUCTURE  */
 ?>

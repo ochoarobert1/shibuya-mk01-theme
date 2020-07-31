@@ -1295,6 +1295,35 @@ a:hover {
   height: 1px;
   z-index: -1;
 }
+.woocommerce-page .section-title h2 {
+  position: relative;
+  font-size: 2.1rem;
+  display: inline-block;
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 800;
+  text-shadow: 0 0 16px black;
+}
+.woocommerce-page .section-title h2:before {
+  content: '';
+  background: url(../images/lineaizq.jpg);
+  position: absolute;
+  top: 20px;
+  left: -200px;
+  width: 212px;
+  height: 1px;
+  z-index: -1;
+}
+.woocommerce-page .section-title h2:after {
+  content: '';
+  background: url(../images/lineader.jpg);
+  position: absolute;
+  top: 20px;
+  right: -200px;
+  width: 212px;
+  height: 1px;
+  z-index: -1;
+}
 #order_review_heading {
   font-weight: 800;
   text-transform: uppercase;
@@ -1773,4 +1802,35 @@ input::-webkit-outer-spin-button input::-webkit-inner-spin-button {
 }
 .custom-category-mobile-container ul .active a {
   color: #B27900 !important;
+}
+.tip_form_class select {
+  background: #181818;
+  color: white;
+  padding: 0.4rem;
+}
+.tip_custom_hidden {
+  display: none;
+}
+.btn-gift {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 1px solid #B27900;
+  padding: 0.5rem 1.5rem;
+  padding-left: 0.5rem;
+  border-radius: 10px;
+  vertical-align: middle;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  align-items: center;
+}
+.btn-gift:hover {
+  background: #000000;
+  color: #ffffff;
+}
+.btn-gift img {
+  margin-right: 10px;
 }

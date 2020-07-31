@@ -1,0 +1,92 @@
+#adminmenu {
+    & .toplevel_page_shibuya-control-panel {
+        & .wp-menu-image {
+            background: url(../images/logotrazoblanco.png);
+            background-size: 25px;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+    }
+}
+
+body.toplevel_page_shibuya-control-panel {
+    & #wpcontent {
+        padding-left: 0;
+    }
+
+    & .shibuya-admin-header-container {
+        background-color: #B97E00;
+        padding: 1rem;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        & img {
+            max-width: 160px;
+        }
+
+        & h1 {
+            font-weight: 300;
+            color: white;
+        }
+    }
+
+    & .shibuya-admin-content-container {
+        padding: 1rem;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        & .shibuya-admin-content-title {
+            ms-flex: 0 0 100%;
+            flex: 0 0 100%;
+            max-width: 100%;
+            margin-bottom: 2rem;
+
+            & h2 {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+        }
+
+        & .shibuya-admin-content-item {
+            ms-flex: 0 0 33%;
+            flex: 0 0 30%;
+            max-width: 30%;
+            background: #e8e8e8;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+
+            & .form-table th {
+                width: 170px;
+            }
+
+            & label {
+                display: block;
+                vertical-align: middle;
+                margin-bottom: 5px;
+                text-align: right;
+            }
+        }
+    }
+
+    & .shibuya-admin-content-submit {
+        ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+
+

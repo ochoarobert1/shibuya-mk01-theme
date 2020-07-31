@@ -32,6 +32,17 @@ function my_jquery_enqueue() {
 /* NOW ALL THE JS FILES */
 require_once('includes/wp_enqueue_scripts.php');
 
+
+add_action('admin_enqueue_scripts', 'shibuya_admin_scripts');
+
+function shibuya_admin_scripts() {
+    $version_remove = NULL;
+    wp_register_style('admin-styles', get_template_directory_uri() . '/css/shibuya-admin.css', NULL, $version_remove, 'all');
+    wp_enqueue_style('admin-styles');
+
+}
+
+
 /* --------------------------------------------------------------
     ADD CUSTOM WALKER BOOTSTRAP
 -------------------------------------------------------------- */
@@ -315,21 +326,21 @@ function ajax_send_contact_form_handler() {
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html>
 
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-        <?php global $title ?>
-        <title><?php echo $title ?></title>
-    </head>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <?php global $title ?>
+    <title><?php echo $title ?></title>
+</head>
 
-    <body>
+<body>
 
-        <div style="color:#444; max-width: 600px; border: 1px solid #cccccc; padding: 15px; box-shadow: 0 0 2px #999999; margin: auto; font-family:Open-sans, sans-serif;">
-            <h2 style="margin-bottom: 2px; margin-top: 2px;"><?php echo $title ?></h2>
-            <p style="margin-top: 2px; margin-bottom: 2px"><?php _e('Sent', 'shibuya'); ?>: <?php echo date("Y/m/d h:i") ?></p>
-            <hr style="border: solid 2px #444">
-            <div style="border: solid 1px #cccccc; background-color: #eeeeee; padding: 15px; margin-top: 15px;">
-                <?php
+    <div style="color:#444; max-width: 600px; border: 1px solid #cccccc; padding: 15px; box-shadow: 0 0 2px #999999; margin: auto; font-family:Open-sans, sans-serif;">
+        <h2 style="margin-bottom: 2px; margin-top: 2px;"><?php echo $title ?></h2>
+        <p style="margin-top: 2px; margin-bottom: 2px"><?php _e('Sent', 'shibuya'); ?>: <?php echo date("Y/m/d h:i") ?></p>
+        <hr style="border: solid 2px #444">
+        <div style="border: solid 1px #cccccc; background-color: #eeeeee; padding: 15px; margin-top: 15px;">
+            <?php
             foreach ($contact_fields as $key => $field) {
                 if ($key != 'g-recaptcha-response') {
                     $field_value = apply_filters('mailto', $submit[$key]);
@@ -337,9 +348,9 @@ function ajax_send_contact_form_handler() {
                 }
             }
                 ?>
-            </div>
         </div>
-    </body>
+    </div>
+</body>
 
 </html>
 <?php

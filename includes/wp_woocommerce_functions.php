@@ -100,6 +100,8 @@ if ( ! function_exists( 'woocommerce_get_product_thumbnail' ) ) {
 
 function woocommerce_custom_image_wrapper_handler() {
     ob_start();
+    $disable_ajax_time = false;
+    $disable_ajax = false;
 ?>
 <div class="custom-image-data-wrapper">
     <h2><?php echo get_the_title(); ?></h2>
@@ -278,6 +280,14 @@ function custom_cart_items_prices( $cart ) {
     }
 }
 
+add_action('woocommerce_before_add_to_cart_button', 'custom_woocommerce_fee_fields');
+
+function custom_woocommerce_fee_fields() {
+?>
+<input type="hidden" name="notes" value='' />
+<input type="hidden" name="tempurize" value='' />
+<?php
+}
 
 /*** Add a text field to each cart item */
 function prefix_after_cart_item_name( $cart_item, $cart_item_key ) {
@@ -490,15 +500,53 @@ function shibuya_product_custom_save_fields( $post_id ) {
 add_action( 'woocommerce_after_order_notes', 'my_custom_checkout_field' );
 
 function my_custom_checkout_field( $checkout ) {
-
     woocommerce_form_field( 'time_takeout', array(
-        'type'          => 'time',
-        'class'         => array('my-field-class form-row-wide'),
+        'type'          => 'text',
+        'autocomplete'  => 'off',
+        'class'         => array('my-field-class time-takeout-class form-row-wide'),
         'label'         => __('Time for takeout [Elegible only for Pickup]'),
         'placeholder'   => __('Enter an hour where you can come for your order'),
     ), $checkout->get_value( 'time_takeout' ));
 }
 
+
+
+add_action('woocommerce_checkout_after_customer_details', 'custom_checkout_fee_fields');
+
+function custom_checkout_fee_fields() {
+?>
+<div class="section-title">
+    <h2 class="tip-container">Your tip</h2>
+</div>
+<div class="tip-form-container">
+    <?php
+    woocommerce_form_field( 'tip_selection', array(
+        'type'          => 'select',
+        'class'         => array('my-field-class tip_form_class form-row-wide'),
+        'label'         => __('Tip for Delivery'),
+        'placeholder'   => __('Select between percentages or custom value'),
+        'required'    => true,
+        'options'     => array(
+            '' => '',
+            'no' => __('No tip'),
+            '15%' => __('15%'),
+            '18%' => __('18%'),
+            'custom' => __('Custom'),
+        ),
+    ), '');
+
+    woocommerce_form_field( 'tip_custom', array(
+        'type'          => 'text',
+        'class'         => array('my-field-class tip_custom_class tip_custom_hidden form-row-wide'),
+        'label'         => __('Custom Tip'),
+        'placeholder'   => __('$ 0.00'),
+        'required'    => true,
+        'custom_attributes' => array('data-type' => 'currency', 'pattern' => '^\$\d{1,3}(,\d{3})*(\.\d+)?$')
+    ), '');
+    ?>
+</div>
+<?php
+}
 /**
  * Process the checkout
  */
@@ -511,6 +559,10 @@ function my_custom_checkout_field_process() {
     if (( ! $_POST['time_takeout'] && (strpos($shipping_selected, 'pickup') !== false) )) {
         wc_add_notice( __( '<strong>Error:</strong> Pickup is Selected, we will need a time for takeout.' ), 'error' );
     }
+    if ( ! $_POST['tip_selection'] ) {
+        wc_add_notice( __( 'Please select a value in Tip selection.' ), 'error' );
+    }
+
 }
 
 /**
@@ -524,13 +576,15 @@ function my_custom_checkout_field_update_order_meta( $order_id ) {
     }
 }
 
+
+
 /**
  * Display field value on the order edit page
  */
 add_action( 'woocommerce_admin_order_data_after_shipping_address', 'my_custom_checkout_field_display_admin_order_meta', 10, 1 );
 
 function my_custom_checkout_field_display_admin_order_meta($order){
-    echo '<p><strong>'.__('Time for Takeout').':</strong> ' . get_post_meta( $order->id, 'time_takeout', true ) . '</p>';
+    echo '<p><strong>'.__('Time for Takeout').':</strong> ' . get_post_meta( $order->get_id(), 'time_takeout', true ) . '</p>';
 }
 
 
@@ -545,6 +599,10 @@ add_filter( 'woocommerce_cart_ready_to_calc_shipping', 'disable_shipping_calc_on
 
 add_action( 'woocommerce_cart_totals_before_order_total', 'display_cart_volume_total', 20 );
 function display_cart_volume_total() {
+    global $woocommerce;
+    $shipping_methods = $woocommerce->shipping->load_shipping_methods();
+    if($shipping_methods['free_shipping']->enabled == "yes")
+    {
 ?>
 
 <tr class="cart-total-custom-shipping">
@@ -558,4 +616,66 @@ function display_cart_volume_total() {
     </td>
 </tr>
 <?php
+    }
+
+}
+
+add_action('woocommerce_cart_calculate_fees', function() {
+    if (is_admin() && !defined('DOING_AJAX')) {
+        return;
+    }
+
+    if ( isset( $_POST['post_data'] ) ) {
+        parse_str( $_POST['post_data'], $post_data );
+    } else {
+        $post_data = $_POST; // fallback for final checkout (non-ajax)
+    }
+
+    if (isset($post_data['tip_selection'])) {
+
+        if ($post_data['tip_selection'] == '15%') {
+            $percentage = 0.15;  // Percentage (5%) in float
+            $percentage_fee = (WC()->cart->get_cart_contents_total() + WC()->cart->get_shipping_total()) * $percentage;
+
+            WC()->cart->add_fee(__('Tip (15%)', 'txtdomain'), $percentage_fee);
+        }
+
+        if ($post_data['tip_selection'] == '18%') {
+            $percentage = 0.18;  // Percentage (5%) in float
+            $percentage_fee = (WC()->cart->get_cart_contents_total() + WC()->cart->get_shipping_total()) * $percentage;
+
+            WC()->cart->add_fee(__('Tip (18%)', 'txtdomain'), $percentage_fee);
+        }
+
+        if ($post_data['tip_selection'] == 'custom') {
+            $fee_custom = $post_data['tip_custom'];
+            WC()->cart->add_fee(__('Tip', 'txtdomain'), filter_var($fee_custom, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION));
+        }
+    }
+});
+
+/**
+ * Auto Complete all WooCommerce orders.
+ */
+add_action( 'woocommerce_thankyou', 'custom_woocommerce_auto_complete_order' );
+function custom_woocommerce_auto_complete_order( $order_id ) {
+    if ( ! $order_id ) {
+        return;
+    }
+
+    $order = wc_get_order( $order_id );
+    $order->update_status( 'completed' );
+}
+
+/**
+ * Add a custom field (in an order) to the emails
+ */
+add_filter( 'woocommerce_email_order_meta_fields', 'custom_woocommerce_email_order_meta_fields', 10, 3 );
+
+function custom_woocommerce_email_order_meta_fields( $fields, $sent_to_admin, $order ) {
+    $fields['time_takeout'] = array(
+        'label' => __( 'Time Takeout' ),
+        'value' => get_post_meta( $order->get_id(), 'time_takeout', true ),
+    );
+    return $fields;
 }
